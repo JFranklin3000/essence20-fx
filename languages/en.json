@@ -1,0 +1,176 @@
+{
+  "E20FX": {
+    "NeedsSequencer": "Essence20 FX needs the Sequencer module: turn it on in Manage Modules.",
+    "NoJB2A": "Essence20 FX: no JB2A animation pack is active, so only sounds will play. Install \"JB2A - Free Content\" for the animations.",
+    "Settings": {
+      "Enabled": {
+        "Name": "Play effects",
+        "Hint": "Animations and sounds for the whole table. Each player can still turn them off for themselves in Sequencer's settings."
+      },
+      "Combat": {
+        "Name": "Attack effects",
+        "Hint": "A projectile or swing, an impact, and a sound for every attack - in the look of its damage type - and a burst for area attacks."
+      },
+      "Damage": {
+        "Name": "Damage and Defeat effects",
+        "Hint": "A token flashes and shakes when it takes damage, and a Defeated one gets a puff of smoke and a skull."
+      },
+      "Conditions": {
+        "Name": "Condition effects",
+        "Hint": "A short icon and sound when a token gains a Condition: Stunned stars, Frightened, Poisoned, Prone, chains for Grappled..."
+      },
+      "Signature": {
+        "Name": "Morph, Transform and Zord effects",
+        "Hint": "Morphing in the Ranger's own colour, Transforming, Energon, Zords arriving, boarding and being recalled, Megazords and Combiners forming and breaking apart."
+      },
+      "Extras": {
+        "Name": "Story Point, Spellcasting and teamwork effects",
+        "Hint": "Story Points spent, Spellcasting sparkles in the caster's colour, the Weird's static, help from a teammate (hearts in My Little Pony), rerolls (fireworks for ponies), and Requisitions arriving."
+      },
+      "Volume": {
+        "Name": "Effect volume",
+        "Hint": "How loud the effect sounds play (each player's Interface volume applies on top)."
+      },
+      "ReducedMotion": {
+        "Name": "Reduced motion",
+        "Hint": "Hear the effect sounds but don't see the animations. Just for you."
+      },
+      "Ambient": {
+        "Name": "Lasting effects",
+        "Hint": "Effects that stay while a state lasts: a Morphed Ranger's aura, a Zord's dust, a Megazord's glow, Defeated smoke, and markers for Stunned, Poisoned, Frightened, Deafened and held."
+      },
+      "AmbientActive": {
+        "Name": "Ring on the active combatant",
+        "Hint": "A ring under the token whose turn it is."
+      },
+      "EmblemsUnderTokens": {
+        "Name": "Faction emblems under tokens",
+        "Hint": "Each token wears its faction emblem underneath (set the images in Faction Emblems)."
+      },
+      "EmblemFlash": {
+        "Name": "Faction emblem flash",
+        "Hint": "The emblem flashes up on a Morph, a Transform, and a Megazord or Combiner forming."
+      },
+      "EmblemsOnDice": {
+        "Name": "Faction emblems on dice",
+        "Hint": "With Dice So Nice: a d20 per faction whose 20 shows its emblem, in each player's Dice So Nice dice choices. Takes effect after a reload."
+      },
+      "DiceAutoColour": {
+        "Name": "Dice in my character's colours",
+        "Hint": "With Dice So Nice: your character's rolls use their colours - a Ranger's, their faction's, or their line's. Just for you."
+      },
+      "SceneAmbience": {
+        "Name": "Scene ambience",
+        "Hint": "Play the loop each scene's Configuration picks (its Environment tab): Night Vale static, Energon motes, sparkles, fog, battlefield smoke, wind, fireflies."
+      },
+      "EmblemOnCards": {
+        "Name": "Faction emblems on roll cards",
+        "Hint": "A character's faction emblem beside their name on their roll cards in chat."
+      }
+    },
+    "Config": {
+      "Title": "Configure FX",
+      "Open": "Configure FX",
+      "Hint": "Change or turn off the animation and sound of any effect, preview it, and export or import the lot.",
+      "ActorButton": "Effects",
+      "Intro": "Change what any effect plays. Leave a field empty to keep the module's own (shown greyed). An animation is a Sequencer database path (jb2a....) or a file; a sound is a file, or \"none\" for silence. Preview plays it just for you, on the selected token (and the targeted one, for an attack).",
+      "IntroActor": "This character's own effects, played over the GM's. Leave a field empty to keep the table's. Preview plays it just for you.",
+      "Color": "Effect colour",
+      "ColorHint": "Used for Morphing and Spellcasting instead of the sheet colour - a hex colour like #ff2266. Empty uses the sheet's.",
+      "Moment": "Effect",
+      "On": "On",
+      "Animation": "Animation",
+      "Sound": "Sound",
+      "Volume": "Volume",
+      "Browse": "Browse",
+      "Preview": "Preview",
+      "Reset": "Reset to default",
+      "Export": "Export",
+      "Import": "Import",
+      "Save": "Save",
+      "Saved": "Effects saved.",
+      "Imported": "Read {count} changed effects from the file - Save to keep them.",
+      "ImportBad": "That file isn't an Essence20 FX export.",
+      "PreviewNeedsToken": "Select a token to preview on.",
+      "PreviewNeedsTarget": "Target another token to preview an attack.",
+      "Group": {
+        "attacks": "Attacks",
+        "areas": "Area attacks",
+        "damage": "Damage and Defeat",
+        "conditions": "Conditions",
+        "signature": "Morph, Transform and Zords",
+        "extras": "Story Points, Spellcasting and teamwork"
+      },
+      "BrowseAnimation": "Browse for an animation",
+      "BrowseSound": "Browse for a sound",
+      "Faction": "Faction emblem",
+      "FactionHint": "Which of the GM's faction emblems this character wears. Automatic follows its Faction item, then its folder.",
+      "FactionAuto": "Automatic",
+      "FactionNone": "None"
+    },
+    "Moment": {
+      "attack-ranged-hit": "Ranged hit",
+      "attack-ranged-critical": "Ranged Critical Success",
+      "attack-ranged-miss": "Ranged miss",
+      "attack-melee-hit": "Melee hit",
+      "attack-melee-critical": "Melee Critical Success",
+      "attack-melee-miss": "Melee miss",
+      "attack-fumble": "Fumble",
+      "area-circle": "Area: circle",
+      "area-emanation": "Area: around the user",
+      "area-cone": "Area: cone",
+      "area-line": "Area: line",
+      "attack-area-hit": "Area: each target hit",
+      "attack-area-critical": "Area: Critical Success on a target",
+      "damage-taken": "Damage taken",
+      "damage-defeated": "Defeated",
+      "morph": "Morph",
+      "unmorph": "Unmorph",
+      "transform": "Transform to Alt Mode",
+      "untransform": "Back to Bot Mode",
+      "energon-spent": "Energon spent",
+      "zord-summoned": "Zord called",
+      "zord-arrived": "Zord arrives (sound)",
+      "zord-placed": "Zord placed on the map",
+      "zord-boarded": "Boarding a Zord",
+      "zord-disembarked": "Getting out of a Zord",
+      "zord-recalled": "Recall for Repairs",
+      "megaform-formed": "Megazord / Combiner forms",
+      "megaform-split": "Megazord / Combiner breaks apart",
+      "storyPoint-spent": "Story Point spent",
+      "spell-cast": "Spellcasting",
+      "weird-used": "The Weird",
+      "assist-given": "Help from a teammate",
+      "rerolled": "Reroll",
+      "requisition-granted": "Requisition granted"
+    },
+    "Emblems": {
+      "Title": "Faction Emblems",
+      "Open": "Faction Emblems",
+      "Hint": "Your own image for each faction - under its tokens, flashing on a Morph or Transform, on dice.",
+      "Intro": "The module ships no faction symbols - they belong to Hasbro - but you can use your own. Give each faction an image (or a video); a character wears its Faction item's, else its folder's. \"Import folder\" fills the rows from a folder whose files are named for them (autobot.webp, cobra.png...). Tint colours the image (leave empty to keep its own colours).",
+      "Faction": "Faction",
+      "Image": "Image",
+      "Tint": "Tint",
+      "Remove": "Remove",
+      "Add": "Add a faction",
+      "ImportFolder": "Import folder",
+      "Saved": "Faction emblems saved.",
+      "Imported": "Matched {count} images to factions ({unmatched} didn't match a name)."
+    },
+    "SceneAmbience": {
+      "Label": "Essence20 FX ambience",
+      "Hint": "A loop over the whole scene, for everyone (a player's Reduced motion keeps it off their screen). Needs JB2A.",
+      "None": "None",
+      "Looks": {
+        "nightvale": "Night Vale: violet haze and static",
+        "energon": "Energon motes",
+        "sparkles": "Sparkles and butterflies",
+        "fog": "Fog",
+        "battlefield": "Battlefield smoke",
+        "wind": "Wind",
+        "fireflies": "Fireflies"
+      }
+    }
+  }
+}

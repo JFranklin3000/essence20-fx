@@ -1,0 +1,56 @@
+<div class="e20fx-config">
+  <p class="e20fx-intro">{{#if actor}}{{localize "E20FX.Config.IntroActor"}}{{else}}{{localize "E20FX.Config.Intro"}}{{/if}}</p>
+
+  {{#if actor}}
+  <div class="e20fx-actor-fields">
+    <div class="form-group">
+      <label for="e20fx-color-{{actor.id}}">{{localize "E20FX.Config.Color"}}</label>
+      <input id="e20fx-color-{{actor.id}}" type="text" name="color" value="{{color}}" placeholder="{{colorDefault}}">
+      <p class="hint">{{localize "E20FX.Config.ColorHint"}}</p>
+    </div>
+    <div class="form-group">
+      <label for="e20fx-faction-{{actor.id}}">{{localize "E20FX.Config.Faction"}}</label>
+      <select id="e20fx-faction-{{actor.id}}" name="faction">
+        {{selectOptions factions selected=faction}}
+      </select>
+      <p class="hint">{{localize "E20FX.Config.FactionHint"}}</p>
+    </div>
+  </div>
+  {{/if}}
+
+  <div class="e20fx-head">
+    <span>{{localize "E20FX.Config.Moment"}}</span>
+    <span>{{localize "E20FX.Config.On"}}</span>
+    <span>{{localize "E20FX.Config.Animation"}}</span>
+    <span>{{localize "E20FX.Config.Sound"}}</span>
+    <span>{{localize "E20FX.Config.Volume"}}</span>
+    <span></span>
+  </div>
+
+  <div class="e20fx-rows">
+    {{#each groups}}
+    <h3 class="e20fx-group">{{label}}</h3>
+    {{#each rows}}
+    <div class="e20fx-row{{#if changed}} changed{{/if}}">
+      <span class="e20fx-label">{{label}}</span>
+      <input type="checkbox" name="rows.{{field}}.on" {{checked on}} aria-label="{{localize "E20FX.Config.On"}}: {{label}}">
+      <input type="text" name="rows.{{field}}.animation" value="{{animation}}" placeholder="{{animationDefault}}" title="{{animationDefault}}" aria-label="{{localize "E20FX.Config.Animation"}}: {{label}}">
+      <input type="text" name="rows.{{field}}.sound" value="{{sound}}" placeholder="{{soundDefault}}" title="{{soundDefault}}" aria-label="{{localize "E20FX.Config.Sound"}}: {{label}}">
+      <input type="number" name="rows.{{field}}.volume" value="{{volume}}" min="0" max="1" step="0.05" placeholder="—" aria-label="{{localize "E20FX.Config.Volume"}}: {{label}}">
+      <span class="e20fx-buttons">
+        <button type="button" data-action="pickAnimation" data-key="{{key}}" data-tooltip="{{localize "E20FX.Config.BrowseAnimation"}}" aria-label="{{localize "E20FX.Config.BrowseAnimation"}}"><i class="fa-solid fa-clapperboard"></i></button>
+        <button type="button" data-action="pickSound" data-key="{{key}}" data-tooltip="{{localize "E20FX.Config.BrowseSound"}}" aria-label="{{localize "E20FX.Config.BrowseSound"}}"><i class="fa-solid fa-music"></i></button>
+        <button type="button" data-action="preview" data-key="{{key}}" data-tooltip="{{localize "E20FX.Config.Preview"}}" aria-label="{{localize "E20FX.Config.Preview"}}"><i class="fa-solid fa-play"></i></button>
+        <button type="button" data-action="reset" data-key="{{key}}" data-tooltip="{{localize "E20FX.Config.Reset"}}" aria-label="{{localize "E20FX.Config.Reset"}}"><i class="fa-solid fa-rotate-left"></i></button>
+      </span>
+    </div>
+    {{/each}}
+    {{/each}}
+  </div>
+
+  <footer class="form-footer">
+    <button type="button" data-action="exportOverrides"><i class="fa-solid fa-file-export"></i> {{localize "E20FX.Config.Export"}}</button>
+    <button type="button" data-action="importOverrides"><i class="fa-solid fa-file-import"></i> {{localize "E20FX.Config.Import"}}</button>
+    <button type="submit"><i class="fa-solid fa-floppy-disk"></i> {{localize "E20FX.Config.Save"}}</button>
+  </footer>
+</div>

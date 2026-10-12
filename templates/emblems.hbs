@@ -1,0 +1,29 @@
+<div class="e20fx-config">
+  <p class="e20fx-intro">{{localize "E20FX.Emblems.Intro"}}</p>
+
+  <div class="e20fx-emblem-head">
+    <span>{{localize "E20FX.Emblems.Faction"}}</span>
+    <span>{{localize "E20FX.Emblems.Image"}}</span>
+    <span>{{localize "E20FX.Emblems.Tint"}}</span>
+    <span></span>
+  </div>
+
+  {{#each slots}}
+  <div class="e20fx-emblem-row">
+    <input type="text" data-field="name" value="{{name}}" aria-label="{{localize "E20FX.Emblems.Faction"}}">
+    <span class="e20fx-path">
+      {{#if img}}<img class="e20fx-emblem-preview" src="{{img}}" alt="">{{/if}}
+      <input type="text" data-field="img" value="{{img}}" aria-label="{{localize "E20FX.Emblems.Image"}}: {{name}}">
+      <button type="button" data-action="browse" data-tooltip="{{localize "E20FX.Config.Browse"}}" aria-label="{{localize "E20FX.Config.Browse"}}"><i class="fa-solid fa-image"></i></button>
+    </span>
+    <input type="text" data-field="tint" value="{{tint}}" placeholder="#ffffff" aria-label="{{localize "E20FX.Emblems.Tint"}}: {{name}}">
+    <button type="button" data-action="removeSlot" data-index="{{index}}" data-tooltip="{{localize "E20FX.Emblems.Remove"}}" aria-label="{{localize "E20FX.Emblems.Remove"}}"><i class="fa-solid fa-trash"></i></button>
+  </div>
+  {{/each}}
+
+  <footer class="form-footer">
+    <button type="button" data-action="addSlot"><i class="fa-solid fa-plus"></i> {{localize "E20FX.Emblems.Add"}}</button>
+    <button type="button" data-action="importFolder"><i class="fa-solid fa-folder-open"></i> {{localize "E20FX.Emblems.ImportFolder"}}</button>
+    <button type="submit"><i class="fa-solid fa-floppy-disk"></i> {{localize "E20FX.Config.Save"}}</button>
+  </footer>
+</div>
