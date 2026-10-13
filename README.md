@@ -47,6 +47,8 @@ https://github.com/JFranklin3000/essence20-fx/releases/download/beta/module.json
 - **Power Rangers:** Morphing in the Ranger's own colour, a Zord being called, arriving, landing in a cloud of dust,
   boarding and getting out, Recall for Repairs, a Megazord forming (a beam from each Zord on the map) and breaking apart.
 - **Transformers:** Transforming and back to Bot Mode, Energon spent, Combiners forming and breaking apart.
+- **Teleports:** a Ranger teleports as a streak of their own colour; a Cybertronian steps through a bridge portal; a pony
+  vanishes in sparkles; anyone else flashes out and in. Any token teleport counts - Blink, Displace, a Wrist Communicator.
 - **Every line:** Story Points (a rising star), Spellcasting (sparkles in the caster's colour), the Weird (an eye and
   radio static), help from a teammate, rerolls, a Requisition arriving (G.I. Joe).
 - **My Little Pony:** hearts and butterflies for help from a friend, fireworks for a reroll. **Night Vale:** an eye for

@@ -21,6 +21,10 @@ free animations and CC0 sounds from Kenney.
 - **Power Rangers:** Morph in the Ranger's own colour, Zords called / arriving / placed / boarded / left / recalled,
   Megazords forming and breaking apart.
 - **Transformers:** Transform and Bot Mode, Energon, Combiners.
+- **Teleports:** any token's teleport (Foundry's Blink and Displace, a Wrist Communicator, a Perk that moves a token
+  without walking it) - a Ranger's streak in their own colour across the map, a Cybertronian's bridge portal at both
+  ends, a pony's sparkles, a flash there and here for everyone else. Needs Essence20 6.0.5 for the rules' teleports
+  (Blink and Displace work on 6.0.4 too).
 - **Every line:** Story Points, Spellcasting, the Weird, teamwork, rerolls, Requisitions; My Little Pony and Night Vale
   looks of their own.
 - **Lasting effects:** auras, markers and glows while a state lasts; a ring on the active combatant (off by default).
