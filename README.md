@@ -14,8 +14,18 @@ https://github.com/JFranklin3000/essence20-fx/releases/latest/download/module.js
 
 Then turn it on in your world's **Manage Modules**.
 
+**Beta testers:** install from this URL instead - Foundry then updates you to each new beta:
+
+```
+https://github.com/JFranklin3000/essence20-fx/releases/download/beta/module.json
+```
+
 **Needs**
-- Foundry VTT **v14** and the **Essence20** system **6.0.5** or later (the first with the hooks this module listens to).
+- Foundry VTT **v14** and the **Essence20** system **6.0.4** or later. Everything works on **6.0.5**, the first with
+  the hooks this module listens to. On **6.0.4** the module rebuilds most effects from the roll cards and character
+  changes instead: attacks, damage, Defeat, Conditions, Morph, Transform, Energon, Megazords forming, Story Points, and
+  everything lasting (auras, markers, badges, turn markers, scene ambience, dice). Area bursts, Zords arriving and
+  leaving, Megazords breaking apart, Requisitions, rerolls and help from a teammate wait for 6.0.5.
 - **Sequencer** (required) - plays the effects and sends them to everyone at the table.
 
 **Recommended**

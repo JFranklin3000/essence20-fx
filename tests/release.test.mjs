@@ -44,7 +44,7 @@ test('everything the module loads is in the release zip and on disk', () => {
 
 test('the manifest is ready to publish', () => {
   assert.equal(manifest.id, 'essence20-fx');
-  assert.match(manifest.version, /^\d+\.\d+\.\d+$/);
+  assert.match(manifest.version, /^\d+\.\d+\.\d+(-[a-z]+\.\d+)?$/);
   assert.ok(manifest.manifest.endsWith('/releases/latest/download/module.json'));
   assert.ok(manifest.download.endsWith(`/releases/download/${manifest.version}/module.zip`));
   assert.deepEqual(manifest.relationships.requires.map(r => r.id), ['sequencer']);

@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.0-beta.1 - first beta
+
+The 1.0.0 feature set below, for testing on Essence20 **6.0.4**: with no essence20.* hooks there, the module rebuilds
+attacks (hit, miss, Critical, Fumble, by the rolled item's damage type and style), damage, Defeat, Conditions, Morph,
+Transform, Energon, Megazords forming and Story Points from 6.0.4's roll cards and character changes, and switches that
+off by itself on 6.0.5. Waiting for 6.0.5: area bursts, Zords arriving and leaving, Megazords breaking apart,
+Requisitions, rerolls, help from a teammate. Beta channel: releases/download/beta/module.json.
+
 ## 1.0.0 - first release
 
 Animations and sounds for the Essence20 system (Foundry VTT v14, Essence20 6.0.5+), built on Sequencer, with JB2A's

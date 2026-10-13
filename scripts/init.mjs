@@ -10,6 +10,7 @@ import { registerChatEmblem } from "./chat-emblem.mjs";
 import { registerTurnMarkers } from "./turn-markers.mjs";
 import { aaHasAnimation, attackGoesToAA, playWithAA } from "./aa-bridge.mjs";
 import { AutorecInstaller, installAutorec, offerAutorecOnce } from "./aa-autorec-install.mjs";
+import { legacy, registerCompat } from "./compat.mjs";
 
 // The windows' stylesheet, attached here as well as listed in module.json: a module.json change only takes effect when
 // the world restarts, and without it the windows can't scroll.
@@ -83,6 +84,11 @@ Hooks.once('ready', () => {
     return;
   }
 
+  if (legacy() && !setting('legacyNoticeShown')) {
+    game.settings.set(MODULE_ID, 'legacyNoticeShown', true);
+    ui.notifications.info(game.i18n.format('E20FX.LegacySystem', { version: game.system.version }), { permanent: true });
+  }
+
   if (!game.modules.get('sequencer')?.active) {
     ui.notifications.warn(game.i18n.localize('E20FX.NeedsSequencer'));
   } else if (!game.modules.get('JB2A_DnD5e')?.active && !game.modules.get('jb2a_patreon')?.active) {
@@ -98,7 +104,8 @@ Hooks.on('essence20.areaPlaced', area => {
   lastArea = { ...area, at: Date.now() };
 });
 
-Hooks.on('essence20.rollResolved', roll => {
+/** A finished roll (essence20.rollResolved, or the 6.0.4 fallback's rebuilt one). */
+function onRoll(roll) {
   const area = areaFor(lastArea, roll, Date.now()) ? lastArea : null;
   if (area) {
     lastArea = null;
@@ -112,14 +119,17 @@ Hooks.on('essence20.rollResolved', roll => {
   if (on('extras')) {
     playMoments(skillMoments(roll));
   }
-});
+}
+
+Hooks.on('essence20.rollResolved', onRoll);
 
 const EVENT_KINDS = { takesDamage: 'damage', defeated: 'damage', conditionGained: 'conditions' };
 const SIGNATURE_EVENTS = ['morph', 'unmorph', 'transform', 'untransform', 'resourceSpent', 'megaformCombined'];
 const EXTRA_EVENTS = ['storyPointSpent', 'assisted', 'rerolled'];
 // Each Megaform's size when last seen, so a roster that grew plays as forming (moments.mjs#signatureMoments).
 const megaformSizes = new Map();
-Hooks.on('essence20.event', payload => {
+/** A rules event (essence20.event, or the 6.0.4 fallback's rebuilt one). */
+function onEvent(payload) {
   const kind = EVENT_KINDS[payload?.event];
   if (kind && on(kind)) {
     playMoments(eventMoments(payload));
@@ -128,7 +138,12 @@ Hooks.on('essence20.event', payload => {
   if ((SIGNATURE_EVENTS.includes(payload?.event) && on('signature')) || (EXTRA_EVENTS.includes(payload?.event) && on('extras'))) {
     playMoments(signatureMoments(payload, megaformSizes));
   }
-});
+}
+
+Hooks.on('essence20.event', onEvent);
+
+// Essence20 6.0.4 has none of the hooks above: rebuild what it can from its roll cards and document changes.
+registerCompat({ onRoll, onEvent });
 
 // Zords arriving, boarding and leaving; Megaforms breaking apart (forming is the megaformCombined event above).
 const EXTRA_HOOKS = ['requisitionGranted'];
@@ -140,4 +155,4 @@ for (const hook of ['zordSummoned', 'zordArrived', 'zordPlaced', 'zordBoarded', 
   });
 }
 
-globalThis[MODULE_ID] = { rollMoments, eventMoments, signatureMoments, skillMoments, zordMoments, playMoments, aaHasAnimation, installAutorec };
+globalThis[MODULE_ID] = { rollMoments, eventMoments, signatureMoments, skillMoments, zordMoments, playMoments, aaHasAnimation, installAutorec, legacy };

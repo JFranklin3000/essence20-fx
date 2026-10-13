@@ -37,6 +37,7 @@ export function registerSettings() {
   // Automated Animations: give the Essence20 entries this module's sounds; whether a GM has been offered them yet.
   toggle('autorecSounds');
   game.settings.register(MODULE_ID, 'autorecOffered', { scope: 'world', config: false, type: Boolean, default: false });
+  game.settings.register(MODULE_ID, 'legacyNoticeShown', { scope: 'world', config: false, type: Boolean, default: false });
 
   // With Automated Animations active: who animates attacks (scripts/aa-bridge.mjs).
   game.settings.register(MODULE_ID, 'attackAnimator', {

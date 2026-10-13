@@ -209,6 +209,7 @@
       "Confirm": "Add Automatic Recognition entries for Essence20 weapons (Blaster, Laser, Rifle, Pistol, Cannon, Grenade, Launcher, Blade, Saber, Bludgeon, Claw and more) to Automated Animations? Only entries whose names its menus don't have yet are added; yours stay as they are. You can edit or delete them in its Automatic Recognition menu.",
       "Added": "Added {count} Essence20 entries to Automated Animations.",
       "NeedsAA": "Automated Animations is not active."
-    }
+    },
+    "LegacySystem": "Essence20 FX: this world runs Essence20 {version}. Attacks, damage, Defeat, Conditions, Morph, Transform, Energon, Megazords forming and Story Points play; area bursts, Zords arriving and leaving, Megazords breaking apart, Requisitions, rerolls and help from a teammate need Essence20 6.0.5."
   }
 }
