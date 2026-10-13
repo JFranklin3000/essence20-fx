@@ -1,7 +1,7 @@
 import { MODULE_ID, SOUNDS, setting } from "./settings.mjs";
 import { allMomentKeys, momentGroups, presetFor } from "./presets.mjs";
 import { cleanImport, mainPart, parseOverrides, rowToOverride } from "./overrides.mjs";
-import { colorOf } from "./moments.mjs";
+import { colorOf, lineOf } from "./moments.mjs";
 import { playMoment, tokenOf } from "./play.mjs";
 import { emblemSlots } from "./emblems.mjs";
 
@@ -147,9 +147,13 @@ export class FxConfig extends HandlebarsApplicationMixin(ApplicationV2) {
     const shape = key.startsWith('area.') ? key.slice('area.'.length) : null;
     const area = shape ? { shape, shapeData: { type: shape, x: source.center.x, y: source.center.y, radius: source.w * 2.5, length: source.w * 5, rotation: 0 } } : null;
     const color = this.element.querySelector('[name="color"]')?.value?.trim() || colorOf(actor);
+    // A teleport previews as a jump to the token from three squares to its left.
+    const teleport = key == 'teleport';
     const moment = {
-      key, source: actor, target: needsTarget ? target : null, area, color,
-      at: ['zord.boarded', 'zord.recalled'].includes(key) ? at : undefined,
+      key, source: teleport ? undefined : actor, actor, target: needsTarget ? target : null, area, color,
+      at: ['zord.boarded', 'zord.recalled', 'teleport'].includes(key) ? at : undefined,
+      from: teleport ? { x: at.x - source.w * 3, y: at.y } : undefined,
+      line: teleport ? lineOf(actor) : undefined,
       soundOnly: key == 'zord.arrived',
     };
     const override = rowToOverride(this.#row(key));

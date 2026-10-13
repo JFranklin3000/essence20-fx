@@ -37,9 +37,9 @@ function known(path) {
 }
 
 /** The users who see the animations and hear the sounds: { sight: ids|null, sound: ids|null } (null = everyone). */
-function audience(tokens) {
+function audience(tokens, hidden = false) {
   const users = game.users.filter(user => user.active);
-  const secret = tokens.some(token => token?.document?.hidden);
+  const secret = hidden || tokens.some(token => token?.document?.hidden);
   const hearing = secret ? users.filter(user => user.isGM) : users;
   const seeing = hearing.filter(user => !user.getFlag?.(MODULE_ID, 'reducedMotion'));
   const ids = list => (list.length == users.length ? null : list.map(user => user.id));
@@ -86,11 +86,13 @@ function partTokens(form) {
 
 /** The GM's override for a moment, then its source actor's own (overrides.mjs). */
 function overridesFor(moment) {
-  return [setting('overrides')?.[moment.key], parseOverrides(moment.source?.getFlag?.(MODULE_ID, 'overrides'))[moment.key]];
+  // A moment played at a point rather than on a token (a teleport) names its actor separately.
+  return [setting('overrides')?.[moment.key], parseOverrides((moment.source ?? moment.actor)?.getFlag?.(MODULE_ID, 'overrides'))[moment.key]];
 }
 
 /**
- * Play one moment: { key, source, target?, damageType?, area?, at?, color?, soundOnly? } (moments.mjs). `at` is where a
+ * Play one moment: { key, source, target?, damageType?, area?, at?, from?, color?, hidden?, soundOnly? } (moments.mjs).
+ * `from` is where a teleporting token left (the preset's depart and streak); `hidden` plays it for the GM only. `at` is where a
  * token was ({x, y, w}) for one that is leaving the map; `soundOnly` plays just the sound, with no token needed.
  * @param {Object} [options]
  * @param {Boolean} [options.preview]   Play on this client only (the Configure FX window's Preview)
@@ -108,7 +110,7 @@ export function playMoment(moment, { preview = false, override = null } = {}) {
     return false;
   }
 
-  const { sight, sound } = preview ? { sight: null, sound: null } : audience([source, target]);
+  const { sight, sound } = preview ? { sight: null, sound: null } : audience([source, target], !!moment.hidden);
   const sequence = new Sequence({ moduleName: MODULE_ID, softFail: true });
   const seen = section => (preview ? section.locally() : sight ? section.forUsers(sight) : section);
   const missed = moment.key.endsWith('.miss');
@@ -146,6 +148,16 @@ export function playMoment(moment, { preview = false, override = null } = {}) {
     const width = onToken?.w ?? moment.at?.w ?? 100;
     const sized = (effect, scale) => effect.size({ width: width * scale }, { gridUnits: false });
     const shift = moment.color ? colorShift(moment.color, preset.baseHue) : null;
+    const tinted = effect => (preset.recolor && shift ? effect.filter('ColorMatrix', shift) : effect);
+
+    // A teleport: a flash where the token left, then a streak from there to where it lands.
+    if (moment.from && known(preset.depart)) {
+      seen(tinted(sized(sequence.effect().file(preset.depart).atLocation({ x: moment.from.x, y: moment.from.y }), preset.scale ?? 1.2)));
+    }
+
+    if (moment.from && on && known(preset.streak)) {
+      seen(tinted(sequence.effect().file(preset.streak).atLocation({ x: moment.from.x, y: moment.from.y }).stretchTo(on).delay(Math.round(delay / 3))));
+    }
 
     if (on && known(preset.ring)) {
       const ring = sized(sequence.effect().file(preset.ring).atLocation(on), (preset.scale ?? 1.2) * 1.4);
@@ -164,8 +176,7 @@ export function playMoment(moment, { preview = false, override = null } = {}) {
     }
 
     if (on && known(preset.overlay)) {
-      const overlay = sized(sequence.effect().file(preset.overlay).atLocation(on), preset.scale ?? 1.2).delay(delay);
-      seen(preset.recolor && shift ? overlay.filter('ColorMatrix', shift) : overlay);
+      seen(tinted(sized(sequence.effect().file(preset.overlay).atLocation(on), preset.scale ?? 1.2).delay(delay)));
     }
 
     // Damage taken: the token's own image flashes the colour and shakes.

@@ -160,6 +160,8 @@ export const DAMAGE = {
  *   recolor  true: the overlay is hue-shifted to the moment's colour (JB2A's blue art turned Red, Pink, Gold...)
  *   baseHue  the overlay art's own hue when it isn't JB2A's usual blue (210), so the shift lands on the right colour
  *   beam     a Sequencer path stretched from each part of a Megaform to the Megaform
+ *   depart   a teleport's flash where the token left (recoloured with the overlay)
+ *   streak   a Sequencer path stretched from where a teleporting token left to where it lands (recoloured too)
  *   scale    how big the impact / overlay is next to the token (default 1.5 / 1.2)
  */
 export const SIGNATURE = {
@@ -200,6 +202,8 @@ export const SIGNATURE = {
     sound: ['scifi/forceField_001.ogg', 'scifi/forceField_002.ogg'],
   },
   'megaform.split': { impact: 'jb2a.explosion.04.blue', scale: 2.5, sound: range('scifi/explosionCrunch_', 5) },
+  // Any token's teleport (Foundry's Blink / Displace, a Wrist Communicator, a Perk's moveTo): gone here, there.
+  teleport: { depart: 'jb2a.misty_step.01.blue', overlay: 'jb2a.misty_step.02.blue', delay: 350, sound: ['digital/phaseJump1.ogg'] },
 };
 
 /**
@@ -225,7 +229,16 @@ export const MOMENTS = {
 
 /** A game line's own look for a moment (the actor's Role says which line: system.version). */
 export const LINES = {
+  // A Ranger teleports as a streak of their own colour across the map.
+  powerRangers: {
+    teleport: { depart: 'jb2a.misty_step.01.blue', streak: 'jb2a.teleport.01.blue', overlay: 'jb2a.misty_step.02.blue', recolor: true, delay: 450, sound: ['digital/phaserUp3.ogg'] },
+  },
+  // A Cybertronian steps through a bridge: a portal opens at both ends.
+  transformers: {
+    teleport: { depart: 'jb2a.portals.horizontal.ring.bright_yellow', overlay: 'jb2a.portals.horizontal.ring.bright_yellow', scale: 1.6, delay: 500, sound: ['scifi/forceField_001.ogg'] },
+  },
   myLittlePony: {
+    teleport: { depart: 'jb2a.twinkling_stars.points07.white', overlay: 'jb2a.twinkling_stars.points07.white', impact: 'jb2a.misty_step.02.blue', delay: 300, sound: ['interface/pluck_001.ogg'] },
     'assist.given': { overlay: 'jb2a.icon.heart.pink', impact: 'jb2a.butterflies.outward_burst.01.bluepurple', sound: ['interface/pluck_001.ogg'] },
     rerolled: { overlay: 'jb2a.firework.02.orangeyellow.01', sound: ['interface/maximize_001.ogg'] },
     'storyPoint.spent': { overlay: 'jb2a.twinkling_stars.points07.white', impact: 'jb2a.butterflies.outward_burst.01.bluepurple', sound: ['interface/bong_001.ogg'] },
@@ -311,7 +324,7 @@ export function presetFor(key, { damageType = null, style = null, line = null, p
 
 /** Every Sequencer path a preset can play - for the database check in tests. */
 export function allAnimationPaths() {
-  const parts = preset => ['projectile', 'swing', 'impact', 'overlay', 'area', 'ring', 'beam'].map(part => preset[part]).filter(Boolean);
+  const parts = preset => ['projectile', 'swing', 'impact', 'overlay', 'area', 'ring', 'beam', 'depart', 'streak'].map(part => preset[part]).filter(Boolean);
   return [
     ...Object.values(GENERIC).flatMap(parts),
     ...Object.values(SIGNATURE).flatMap(parts),

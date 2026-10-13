@@ -151,3 +151,23 @@ test('Story Points, help from a teammate, rerolls and Requisitions', () => {
   assert.deepEqual(zordMoments('requisitionGranted', { member: red, item: {} }), [{ key: 'requisition.granted', source: red }]);
   assert.deepEqual(zordMoments('requisitionGranted', {}), []);
 });
+
+test('a teleport: any waypoint that teleports, or a Blink / Displace action; walking is not', async () => {
+  const { isTeleportMovement } = await import('../scripts/moments.mjs');
+  assert.equal(isTeleportMovement({ passed: { waypoints: [{ action: 'walk' }, { action: 'walk', teleport: true }] }, pending: { waypoints: [] } }), true);
+  assert.equal(isTeleportMovement({ passed: { waypoints: [{ action: 'blink' }] } }), true);
+  assert.equal(isTeleportMovement({ passed: { waypoints: [] }, pending: { waypoints: [{ action: 'displace' }] } }), true);
+  assert.equal(isTeleportMovement({ passed: { waypoints: [{ action: 'walk' }, { action: 'fly' }] } }), false);
+  assert.equal(isTeleportMovement(null), false);
+});
+
+test("a teleport moment: from where the token left to where it landed, in the actor's colour and line", async () => {
+  const { teleportMoments } = await import('../scripts/moments.mjs');
+  const ranger = { system: { color: '#cc2222' }, items: [{ type: 'role', system: { version: 'powerRangers' } }] };
+  const [moment] = teleportMoments({ actor: ranger, from: { x: 100, y: 100 }, to: { x: 400, y: 100 }, width: 100, hidden: true });
+  assert.deepEqual({ ...moment, actor: undefined }, { key: 'teleport', from: { x: 100, y: 100 }, at: { x: 400, y: 100, w: 100 }, color: '#cc2222', line: 'powerRangers', hidden: true, actor: undefined });
+  assert.equal(moment.actor, ranger);
+  // A Cybertronian Threat has no Role, but it's still a Transformer.
+  assert.equal(teleportMoments({ actor: { system: { canTransform: true }, items: [] }, from: { x: 0, y: 0 }, to: { x: 1, y: 0 }, width: 100 })[0].line, 'transformers');
+  assert.deepEqual(teleportMoments({ actor: ranger, from: { x: 5, y: 5 }, to: { x: 5, y: 5 }, width: 100 }), []);
+});

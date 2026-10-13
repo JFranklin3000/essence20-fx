@@ -243,3 +243,36 @@ export function allowed(history, count, now, { max = 12, windowMs = 1000 } = {})
 
   return room;
 }
+
+/**
+ * Whether a token's movement (Foundry v14's moveToken) was a teleport: any waypoint of it that teleports - Foundry's own
+ * Blink and Displace movement actions, and the system's rules moves that jump rather than walk (a Wrist Communicator,
+ * a Perk's moveTo with animate: false).
+ * @param {Object} movement   The moveToken hook's movement data.
+ * @returns {Boolean}
+ */
+export function isTeleportMovement(movement) {
+  const waypoints = [...(movement?.passed?.waypoints ?? []), ...(movement?.pending?.waypoints ?? [])];
+  return waypoints.some(waypoint => waypoint?.teleport || ['blink', 'displace'].includes(waypoint?.action));
+}
+
+/**
+ * The teleport moment: from where the token left to where it landed, in the actor's colour and game line's look.
+ * Not drawn on the token (which has already moved), but at the two points; hidden tokens play for the GM only.
+ * @param {Object} options
+ * @param {Actor} options.actor
+ * @param {{x, y}} options.from   Where the token's centre was.
+ * @param {{x, y}} options.to     Where it is now.
+ * @param {Number} options.width  The token's width in pixels.
+ * @param {Boolean} [options.hidden]
+ * @returns {Object[]}
+ */
+export function teleportMoments({ actor, from, to, width, hidden = false }) {
+  if (!from || !to || (from.x == to.x && from.y == to.y)) {
+    return [];
+  }
+
+  // A transforming actor with no Role (a Cybertronian Threat) still steps through a bridge.
+  const line = actor?.items?.find?.(item => item?.type == 'role') ? lineOf(actor) : (actor?.system?.canTransform ? 'transformers' : lineOf(actor));
+  return [{ key: 'teleport', from, at: { x: to.x, y: to.y, w: width }, color: colorOf(actor), line, hidden, actor }];
+}

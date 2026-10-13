@@ -85,3 +85,16 @@ test('every preset animation is in the free JB2A database', { skip: !fs.existsSy
   const missing = allAnimationPaths().filter(dbPath => !exists(dbPath));
   assert.deepEqual(missing, []);
 });
+
+test("teleports: a generic flash there and here, a Ranger's streak in their colour, a Cybertronian's bridge", () => {
+  const generic = presetFor('teleport');
+  assert.ok(generic.depart && generic.overlay && !generic.streak);
+  const ranger = presetFor('teleport', { line: 'powerRangers' });
+  assert.equal(ranger.streak, 'jb2a.teleport.01.blue');
+  assert.equal(ranger.recolor, true);
+  assert.match(presetFor('teleport', { line: 'transformers' }).depart, /portals/);
+  assert.ok(presetFor('teleport', { line: 'myLittlePony' }).depart);
+  assert.equal(presetFor('teleport', { line: 'giJoe' }).depart, generic.depart);
+  assert.ok(allAnimationPaths().includes('jb2a.teleport.01.blue'));
+  assert.ok(allAnimationPaths().includes('jb2a.portals.horizontal.ring.bright_yellow'));
+});

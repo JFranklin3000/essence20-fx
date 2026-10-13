@@ -1,5 +1,5 @@
 import { MODULE_ID, registerSettings, setting, syncReducedMotion } from "./settings.mjs";
-import { areaFor, eventMoments, rollMoments, signatureMoments, skillMoments, zordMoments } from "./moments.mjs";
+import { areaFor, eventMoments, isTeleportMovement, rollMoments, signatureMoments, skillMoments, teleportMoments, zordMoments } from "./moments.mjs";
 import { playMoments } from "./play.mjs";
 import { FxConfig } from "./config-app.mjs";
 import { FactionEmblems } from "./emblems-app.mjs";
@@ -154,5 +154,18 @@ for (const hook of ['zordSummoned', 'zordArrived', 'zordPlaced', 'zordBoarded', 
     }
   });
 }
+
+// A token teleporting - Foundry's Blink / Displace, a Wrist Communicator, a Perk that moves a token without walking it.
+// Every client hears moveToken; the one that moved it plays the effect (Sequencer shows it to everyone).
+Hooks.on('moveToken', (document, movement, operation, user) => {
+  if (user?.id != game.user.id || !on('signature') || !document.actor || !isTeleportMovement(movement)) {
+    return;
+  }
+
+  const from = document.getCenterPoint(movement.origin ?? {});
+  const to = document.getCenterPoint(movement.destination ?? {});
+  const width = (movement.destination?.width ?? document.width) * (canvas?.grid?.size ?? 100);
+  playMoments(teleportMoments({ actor: document.actor, from, to, width, hidden: document.hidden }));
+});
 
 globalThis[MODULE_ID] = { rollMoments, eventMoments, signatureMoments, skillMoments, zordMoments, playMoments, aaHasAnimation, installAutorec, legacy };
