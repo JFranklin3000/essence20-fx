@@ -32,6 +32,25 @@ export function registerSettings() {
   toggle('emblemsOnDice', { initial: false });
   toggle('diceAutoColour', { initial: false, scope: 'client' });
   toggle('sceneAmbience');
+
+  // Automated Animations: give the Essence20 entries this module's sounds; whether a GM has been offered them yet.
+  toggle('autorecSounds');
+  game.settings.register(MODULE_ID, 'autorecOffered', { scope: 'world', config: false, type: Boolean, default: false });
+
+  // With Automated Animations active: who animates attacks (scripts/aa-bridge.mjs).
+  game.settings.register(MODULE_ID, 'attackAnimator', {
+    name: 'E20FX.Settings.AttackAnimator.Name',
+    hint: 'E20FX.Settings.AttackAnimator.Hint',
+    scope: 'world',
+    config: true,
+    type: String,
+    choices: {
+      fx: 'E20FX.Settings.AttackAnimator.Fx',
+      aaFirst: 'E20FX.Settings.AttackAnimator.AaFirst',
+      aa: 'E20FX.Settings.AttackAnimator.Aa',
+    },
+    default: 'aaFirst',
+  });
   toggle('emblemOnCards');
 
   // The GM's faction emblem images (scripts/emblems.mjs), edited in Faction Emblems.

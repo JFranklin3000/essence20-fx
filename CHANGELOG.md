@@ -22,5 +22,8 @@ free animations and CC0 sounds from Kenney.
   effects and colour from its sheet.
 - **Faction Emblems:** your own image per faction, under tokens, flashing on a Morph or Transform, on roll cards in
   chat, on dice.
+- **Automated Animations (optional):** attacks handed to it - every attack, or only those it has an animation for
+  (its item settings or Automatic Recognition), with Essence20 FX animating the rest. 56 Automatic Recognition entries
+  for Essence20 weapon names (about 72% of the compendium's weapons), offered to the GM once and in the settings.
 - **Dice So Nice (optional):** 21 Essence20 colour sets, dice in your character's colours, emblem d20s.
 - **Settings:** each kind of effect on or off, volume, and Reduced motion for each player.

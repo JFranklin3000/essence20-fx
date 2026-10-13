@@ -21,6 +21,7 @@ Then turn it on in your world's **Manage Modules**.
 **Recommended**
 - **JB2A - Free Content** - the animations. Without it, only the sounds play. The JB2A Patreon pack works too.
 - **Dice So Nice** - for the Essence20 dice (optional; nothing needs it).
+- **Automated Animations** (theripper93's v14 version) - optional: per-item animations and name matching for attacks.
 
 ## What it does
 
@@ -79,6 +80,19 @@ for each faction (or **Import folder**: files named `autobot.webp`, `cobra.png`.
 item's emblem, else its folder's, else the one picked in its Effects window: under its token, flashing up on a Morph, a
 Transform or a Megazord forming, beside their name on their roll cards in chat, and optionally on a Dice So Nice d20.
 
+**Automated Animations** (optional): it has no Essence20 support of its own, so Essence20 FX hands it each attack -
+the attacker, the item, every target and which were hit (misses animate as misses). **Attack animations by** (GM)
+picks who animates attacks: *Essence20 FX only*, *Automated Animations for every attack* (an item it has nothing for
+plays nothing), or - the default - *Automated Animations when it has one*: an item set up in its item menu (the
+"Automated Animations" button in an item sheet's header), or whose name - or its weapon's - its Automatic Recognition
+knows; Essence20 FX's otherwise. Area attacks and everything that isn't an attack stay with Essence20 FX. Its default
+Automatic Recognition list is D&D-flavoured (Crossbow, Sword, Fire Bolt...), so this module adds **56 Essence20 entries**
+to it - Blaster, Laser, Rifle, Pistol, Gun, Cannon, Grenade, Launcher, Missile, Blade, Saber, Bludgeon, Claw, Bite,
+Staff, Lance and more, each with a fitting JB2A animation and one of this module's sounds - recognising about 72% of the
+system's compendium weapons. A GM is offered them once; they can be added any time from **Configure Settings →
+Essence20 FX → Add Essence20 weapons**. Only names its menus don't have yet are added - your own entries are never
+replaced - and you can edit or delete them in its Automatic Recognition menu.
+
 **Dice So Nice:** 21 Essence20 colour sets in every player's Dice So Nice choices - every Ranger colour, Autobot,
 Decepticon, Energon, Joe, Cobra, Dreadnok, a pony rainbow, Harmony and Night Vale.
 
@@ -90,6 +104,7 @@ for modules"); each fires once, on the client that made it happen, and Sequencer
 - `scripts/moments.mjs` turns a hook's payload into moments; `scripts/presets.mjs` says what each moment plays (by
   damage type, weapon style, game line); `scripts/overrides.mjs` applies the GM's and an actor's changes;
   `scripts/play.mjs` plays it with Sequencer.
+- `scripts/aa-bridge.mjs` hands attacks to Automated Animations; `scripts/aa-match.mjs` mirrors its item lookup.
 - `scripts/ambient.mjs` keeps the lasting effects (each client its own); `scripts/emblems.mjs` the faction emblems;
   `scripts/dice.mjs` Dice So Nice.
 - Tests: `npm test` (Node's own test runner - nothing to install). With JB2A installed beside this module, they also check

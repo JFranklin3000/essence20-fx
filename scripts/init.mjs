@@ -7,6 +7,8 @@ import { registerAmbient } from "./ambient.mjs";
 import { registerDiceHooks } from "./dice.mjs";
 import { registerSceneAmbience } from "./scene-ambience.mjs";
 import { registerChatEmblem } from "./chat-emblem.mjs";
+import { aaHasAnimation, attackGoesToAA, playWithAA } from "./aa-bridge.mjs";
+import { AutorecInstaller, installAutorec, offerAutorecOnce } from "./aa-autorec-install.mjs";
 
 // The windows' stylesheet, attached here as well as listed in module.json: a module.json change only takes effect when
 // the world restarts, and without it the windows can't scroll.
@@ -21,6 +23,7 @@ registerAmbient();
 registerDiceHooks();
 registerSceneAmbience();
 registerChatEmblem();
+offerAutorecOnce();
 
 /**
  * Essence20 FX: listens to the system's essence20.* hooks (its docs/ARCHITECTURE.md, "Hooks for modules") and plays
@@ -36,6 +39,14 @@ Hooks.once('init', () => {
     hint: 'E20FX.Config.Hint',
     icon: 'fa-solid fa-wand-sparkles',
     type: FxConfig,
+    restricted: true,
+  });
+  game.settings.registerMenu(MODULE_ID, 'autorec', {
+    name: 'E20FX.Autorec.Title',
+    label: 'E20FX.Autorec.Open',
+    hint: 'E20FX.Autorec.Hint',
+    icon: 'fa-solid fa-wand-magic-sparkles',
+    type: AutorecInstaller,
     restricted: true,
   });
   game.settings.registerMenu(MODULE_ID, 'emblems', {
@@ -91,7 +102,8 @@ Hooks.on('essence20.rollResolved', roll => {
     lastArea = null;
   }
 
-  if (on('combat')) {
+  // An attack Automated Animations will animate goes to it (aa-bridge.mjs); the rest play here.
+  if (on('combat') && !(attackGoesToAA(roll, area) && playWithAA(roll))) {
     playMoments(rollMoments(roll, area));
   }
 
@@ -126,4 +138,4 @@ for (const hook of ['zordSummoned', 'zordArrived', 'zordPlaced', 'zordBoarded', 
   });
 }
 
-globalThis[MODULE_ID] = { rollMoments, eventMoments, signatureMoments, skillMoments, zordMoments, playMoments };
+globalThis[MODULE_ID] = { rollMoments, eventMoments, signatureMoments, skillMoments, zordMoments, playMoments, aaHasAnimation, installAutorec };

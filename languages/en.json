@@ -66,6 +66,17 @@
       "EmblemOnCards": {
         "Name": "Faction emblems on roll cards",
         "Hint": "A character's faction emblem beside their name on their roll cards in chat."
+      },
+      "AttackAnimator": {
+        "Name": "Attack animations by",
+        "Hint": "Only with the Automated Animations module active. It has no Essence20 support of its own; this hands it each attack (who, with what, at whom, which hit). \"When it has one\" uses its animation for an item it's set up for - its own settings on the item (the item sheet's Automated Animations button), or a name its Automatic Recognition knows - and Essence20 FX's otherwise. Area attacks, and everything that isn't an attack, stay with Essence20 FX.",
+        "Fx": "Essence20 FX only",
+        "AaFirst": "Automated Animations when it has one, else Essence20 FX",
+        "Aa": "Automated Animations for every attack"
+      },
+      "AutorecSounds": {
+        "Name": "Sounds on the Automated Animations entries",
+        "Hint": "The Essence20 entries added to Automated Animations play this module's sounds (applies the next time they're added)."
       }
     },
     "Config": {
@@ -171,6 +182,14 @@
         "wind": "Wind",
         "fireflies": "Fireflies"
       }
+    },
+    "Autorec": {
+      "Title": "Essence20 weapons for Automated Animations",
+      "Open": "Add Essence20 weapons",
+      "Hint": "Adds Automatic Recognition entries for the words Essence20 weapon names use - Blaster, Laser, Rifle, Pistol, Cannon, Grenade, Launcher, Blade, Saber, Bludgeon, Claw and more - to Automated Animations' menus. Your own entries are never replaced. Needs Automated Animations.",
+      "Confirm": "Add Automatic Recognition entries for Essence20 weapons (Blaster, Laser, Rifle, Pistol, Cannon, Grenade, Launcher, Blade, Saber, Bludgeon, Claw and more) to Automated Animations? Only entries whose names its menus don't have yet are added; yours stay as they are. You can edit or delete them in its Automatic Recognition menu.",
+      "Added": "Added {count} Essence20 entries to Automated Animations.",
+      "NeedsAA": "Automated Animations is not active."
     }
   }
 }

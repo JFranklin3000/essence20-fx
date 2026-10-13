@@ -4,7 +4,9 @@
   "description": "Animations and sounds for the Essence20 system: attacks, Critical Successes, damage, Morphing, Transforming, Zords and Megaforms.",
   "version": "1.0.0",
   "authors": [
-    { "name": "talinthalas" }
+    {
+      "name": "talinthalas"
+    }
   ],
   "url": "https://github.com/JFranklin3000/essence20-fx",
   "license": "LICENSE",
@@ -22,19 +24,52 @@
     "styles/config.css"
   ],
   "languages": [
-    { "lang": "en", "name": "English", "path": "languages/en.json" }
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "languages/en.json"
+    }
   ],
   "relationships": {
     "systems": [
-      { "id": "essence20", "type": "system", "compatibility": { "minimum": "6.0.5" } }
+      {
+        "id": "essence20",
+        "type": "system",
+        "compatibility": {
+          "minimum": "6.0.5"
+        }
+      }
     ],
     "requires": [
-      { "id": "sequencer", "type": "module", "compatibility": { "minimum": "4.0.0" } }
+      {
+        "id": "sequencer",
+        "type": "module",
+        "compatibility": {
+          "minimum": "4.0.0"
+        }
+      }
     ],
     "recommends": [
-      { "id": "JB2A_DnD5e", "type": "module", "reason": "The free JB2A animations the default effects use." },
-      { "id": "jb2a_patreon", "type": "module", "reason": "JB2A's Patreon pack: richer variants where a preset has one." },
-      { "id": "dice-so-nice", "type": "module", "reason": "Essence20 dice colour sets." }
+      {
+        "id": "JB2A_DnD5e",
+        "type": "module",
+        "reason": "The free JB2A animations the default effects use."
+      },
+      {
+        "id": "jb2a_patreon",
+        "type": "module",
+        "reason": "JB2A's Patreon pack: richer variants where a preset has one."
+      },
+      {
+        "id": "dice-so-nice",
+        "type": "module",
+        "reason": "Essence20 dice colour sets."
+      },
+      {
+        "id": "autoanimations",
+        "type": "module",
+        "reason": "Optional: hand attacks to Automated Animations (its per-item animations and name matching)."
+      }
     ]
   }
 }
