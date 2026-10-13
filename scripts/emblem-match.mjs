@@ -2,7 +2,7 @@
  * Faction emblems: which of the GM's emblem images an actor gets. Pure (tested with `node --test`).
  *
  * The module ships no emblems - the Autobot, Decepticon, G.I. Joe and Cobra symbols are Hasbro's - so a GM supplies
- * their own images, one per "slot" ({ name, img, tint }). An actor's slot is, in order: its own choice (flags), its
+ * their own images, one per "slot" ({ name, img, marker, tint }) - img the emblem (badge, flash, roll cards, dice), marker the turn marker. An actor's slot is, in order: its own choice (flags), its
  * Faction item's name (characters carry one), a folder it sits in ("Cobra" for an NPC folder), else none.
  */
 
@@ -42,19 +42,22 @@ export function pickEmblem(slots = [], { override = '', factionNames = [], folde
 }
 
 /**
- * Files from a folder matched to slots by name ("autobot.webp" -> Autobot). Returns the slots with their new images
- * and which files matched nothing.
- * @param {Array<{name, img}>} slots
+ * Files from a folder matched to slots by name: "autobot.webp" is Autobot's emblem, "autobot-marker.webp" (or
+ * "_marker", " marker", "turn marker") its turn marker. Returns the slots with their new images and which files matched
+ * nothing.
+ * @param {Array<{name, img, marker}>} slots
  * @param {String[]} files   Full paths
  */
 export function matchFolder(slots = [], files = []) {
   const unmatched = [];
   const next = slots.map(slot => ({ ...slot }));
   for (const file of files) {
-    const base = String(file).split('/').pop();
-    const slot = next.find(candidate => factionKey(candidate.name) == factionKey(decodeURIComponent(base)));
+    const base = decodeURIComponent(String(file).split('/').pop()).replace(/\.[a-z0-9]{2,4}$/i, '');
+    const markerMatch = /[\s_-]*(turn[\s_-]*)?marker$/i.exec(base);
+    const name = markerMatch ? base.slice(0, markerMatch.index) : base;
+    const slot = next.find(candidate => factionKey(candidate.name) == factionKey(name));
     if (slot) {
-      slot.img = file;
+      slot[markerMatch ? 'marker' : 'img'] = file;
     } else {
       unmatched.push(file);
     }

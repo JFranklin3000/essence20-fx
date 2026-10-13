@@ -20,8 +20,9 @@ free animations and CC0 sounds from Kenney.
   fireflies), set in Scene Configuration.
 - **Configure FX:** change, mute or turn off any effect, preview it, export and import the lot; a character's own
   effects and colour from its sheet.
-- **Faction Emblems:** your own image per faction, under tokens, flashing on a Morph or Transform, on roll cards in
-  chat, on dice.
+- **Faction Emblems:** your own images per faction - an emblem (a badge on the token's corner, a flash on a Morph or
+  Transform, roll cards, dice) and a turn marker (Foundry's own marker under the active token) - with previews and a
+  size check as you pick them.
 - **Automated Animations (optional):** attacks handed to it - every attack, or only those it has an animation for
   (its item settings or Automatic Recognition), with Essence20 FX animating the rest. 56 Automatic Recognition entries
   for Essence20 weapon names (about 72% of the compendium's weapons), offered to the GM once and in the settings.

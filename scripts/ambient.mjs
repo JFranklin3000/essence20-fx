@@ -6,7 +6,7 @@ import { isFilePath } from "./overrides.mjs";
 
 /**
  * Ambient effects: lasting, looping effects a token wears while a state lasts - a Morphed Ranger's aura, Stunned stars,
- * a Zord's dust, the active combatant's ring, its faction emblem (ambient-state.mjs says which). Each client keeps its
+ * a Zord's dust, the active combatant's ring, its faction badge (ambient-state.mjs says which). Each client keeps its
  * own (played locally, never saved to the scene), so each viewer's Reduced motion and sight of hidden tokens apply, and
  * nothing needs a GM to write anything.
  */
@@ -31,13 +31,15 @@ function isActive(token) {
 /** Put one ambient effect on a token. */
 function start(token, key, emblem) {
   const look = AMBIENT[key];
-  const file = key == 'emblem' ? emblem?.img : look?.file;
+  const file = key == 'badge' ? emblem?.img : look?.file;
   if (!look || !known(file)) {
     return;
   }
 
   const sequence = new Sequence({ moduleName: MODULE_ID, softFail: true });
-  const effect = sequence.effect().file(file).attachTo(token, { bindVisibility: true }).scaleToObject(look.scale ?? 1).opacity(look.opacity ?? 1)
+  // A corner badge sits inside the token's corner; everything else is centred on it.
+  const attach = look.corner ? { bindVisibility: true, align: look.corner, edge: 'inner' } : { bindVisibility: true };
+  const effect = sequence.effect().file(file).attachTo(token, attach).scaleToObject(look.scale ?? 1).opacity(look.opacity ?? 1)
     .persist().locally().name(ambientName(key, token.id)).fadeIn(400).fadeOut(400);
   if (look.below) {
     effect.belowTokens();
@@ -48,7 +50,7 @@ function start(token, key, emblem) {
     effect.filter('ColorMatrix', shift);
   }
 
-  if (key == 'emblem' && /^#[0-9a-f]{6}$/i.test(emblem?.tint ?? '')) {
+  if (key == 'badge' && /^#[0-9a-f]{6}$/i.test(emblem?.tint ?? '')) {
     effect.tint(emblem.tint);
   }
 
@@ -63,8 +65,8 @@ export function syncToken(token) {
 
   const visible = !token.document.hidden || game.user.isGM;
   const on = ready() && visible && !game.user.getFlag(MODULE_ID, 'reducedMotion');
-  const show = on ? { states: setting('ambient'), conditions: setting('ambient'), active: setting('ambientActive'), emblems: setting('emblemsUnderTokens') } : {};
-  const emblem = show.emblems ? emblemFor(token.actor) : null;
+  const show = on ? { states: setting('ambient'), conditions: setting('ambient'), active: setting('ambientActive'), badges: setting('emblemBadge') } : {};
+  const emblem = show.badges ? emblemFor(token.actor) : null;
   const wanted = new Set(wantedAmbient(token.actor, { active: isActive(token), emblem, show }));
 
   const current = Sequencer.EffectManager.getEffects({ object: token }).filter(effect => ambientKey(effect.data?.name, token.id));

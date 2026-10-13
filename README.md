@@ -59,7 +59,7 @@ a big fight stays readable.
 | Attack / Damage and Defeat / Condition / Morph, Transform and Zord / Story Point, Spellcasting and teamwork effects | GM | Each kind on or off |
 | Lasting effects, Ring on the active combatant | GM | The effects that stay while a state lasts |
 | Scene ambience | GM | Play the loop each scene picks |
-| Faction emblems under tokens / flash / on roll cards / on dice | GM | Where the emblems show |
+| Faction badges / turn markers / flash / on roll cards / on dice | GM | Where the emblems show |
 | Effect volume | GM | How loud (each player's Interface volume applies on top) |
 | Reduced motion | Each player | Hear the sounds, don't see the animations |
 | Dice in my character's colours | Each player | With Dice So Nice: a Ranger in their colour, else their faction's or line's |
@@ -75,10 +75,20 @@ their setups.
 for that character, played over the GM's - plus an **Effect colour** for Morphing and Spellcasting and a **Faction
 emblem** choice.
 
-**Faction Emblems** (GM): the module ships no faction symbols - they belong to Hasbro - but you can use your own image
-for each faction (or **Import folder**: files named `autobot.webp`, `cobra.png`...). A character wears its Faction
-item's emblem, else its folder's, else the one picked in its Effects window: under its token, flashing up on a Morph, a
-Transform or a Megazord forming, beside their name on their roll cards in chat, and optionally on a Dice So Nice d20.
+**Faction Emblems** (GM): the module ships no faction symbols - they belong to Hasbro - but you can use your own. Each
+faction can have two images (or **Import folder**: `cobra.png` for the emblem, `cobra-marker.png` for the marker):
+
+- **Emblem** - a badge on the token's top-left corner (a third of its width), the flash on a Morph, a Transform or a
+  Megazord forming, beside the character's name on their roll cards, and optionally on a Dice So Nice d20. *Square,
+  128-256 px, transparent PNG or WebP; bold and simple - it shows small.*
+- **Turn marker** - Foundry's own marker under the token whose turn it is. Foundry draws it square at 1.5x the token,
+  under the token, so only the outer ring shows, and spins it. *Square, 512 x 512 px (Foundry's own size), transparent,
+  with the design in the outer band - a ring, or the symbol repeated around it.* A marker someone picked for a token by
+  hand is never replaced.
+
+The window previews each image the way it will appear and checks its size as you pick it (not square, too small, too
+big, or a JPEG that can't be transparent). A character wears its Faction item's emblem, else its folder's, else the one
+picked in its Effects window.
 
 **Automated Animations** (optional): it has no Essence20 support of its own, so Essence20 FX hands it each attack -
 the attacker, the item, every target and which were hit (misses animate as misses). **Attack animations by** (GM)

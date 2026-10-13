@@ -43,9 +43,12 @@ export async function confirmAndInstall() {
   return ok;
 }
 
-/** The settings-menu entry: Foundry opens a menu by rendering it, so rendering asks and merges. */
-export class AutorecInstaller {
-  render() {
+/**
+ * The settings-menu entry. Foundry only accepts an Application there, and opens it by rendering it - so rendering asks
+ * and merges instead of drawing a window.
+ */
+export class AutorecInstaller extends foundry.applications.api.ApplicationV2 {
+  async render() {
     confirmAndInstall();
     return this;
   }

@@ -7,6 +7,7 @@ import { registerAmbient } from "./ambient.mjs";
 import { registerDiceHooks } from "./dice.mjs";
 import { registerSceneAmbience } from "./scene-ambience.mjs";
 import { registerChatEmblem } from "./chat-emblem.mjs";
+import { registerTurnMarkers } from "./turn-markers.mjs";
 import { aaHasAnimation, attackGoesToAA, playWithAA } from "./aa-bridge.mjs";
 import { AutorecInstaller, installAutorec, offerAutorecOnce } from "./aa-autorec-install.mjs";
 
@@ -23,6 +24,7 @@ registerAmbient();
 registerDiceHooks();
 registerSceneAmbience();
 registerChatEmblem();
+registerTurnMarkers();
 offerAutorecOnce();
 
 /**

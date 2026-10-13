@@ -19,7 +19,8 @@ export const AMBIENT = {
   'condition.grappled': { file: 'jb2a.markers.chain.standard.loop.02.red', scale: 1.3, opacity: 0.7 },
   'condition.restrained': { file: 'jb2a.markers.chain.standard.loop.02.red', scale: 1.3, opacity: 0.7 },
   'condition.immobilized': { file: 'jb2a.markers.chain.standard.loop.02.red', scale: 1.3, opacity: 0.7 },
-  emblem: { below: true, scale: 1.35, opacity: 0.7 },
+  // The faction emblem as a badge on the token's top-left corner, a third of its width (its image: emblem-images.mjs).
+  badge: { scale: 0.35, opacity: 1, corner: 'top-left' },
 };
 
 /**
@@ -28,7 +29,7 @@ export const AMBIENT = {
  * @param {Object} [options]
  * @param {Boolean} [options.active]     It's this token's turn
  * @param {Object} [options.emblem]      Its faction emblem slot ({ img, tint }), if any
- * @param {Object} [options.show]        Which kinds are switched on: { states, conditions, active, emblems }
+ * @param {Object} [options.show]        Which kinds are switched on: { states, conditions, active, badges }
  * @returns {Array<String>}  AMBIENT keys
  */
 export function wantedAmbient(actor, { active = false, emblem = null, show = {} } = {}) {
@@ -68,8 +69,8 @@ export function wantedAmbient(actor, { active = false, emblem = null, show = {} 
     }
   }
 
-  if (show.emblems && emblem?.img) {
-    wanted.push('emblem');
+  if (show.badges && emblem?.img) {
+    wanted.push('badge');
   }
 
   return wanted;

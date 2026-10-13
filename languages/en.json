@@ -43,10 +43,6 @@
         "Name": "Ring on the active combatant",
         "Hint": "A ring under the token whose turn it is."
       },
-      "EmblemsUnderTokens": {
-        "Name": "Faction emblems under tokens",
-        "Hint": "Each token wears its faction emblem underneath (set the images in Faction Emblems)."
-      },
       "EmblemFlash": {
         "Name": "Faction emblem flash",
         "Hint": "The emblem flashes up on a Morph, a Transform, and a Megazord or Combiner forming."
@@ -77,6 +73,14 @@
       "AutorecSounds": {
         "Name": "Sounds on the Automated Animations entries",
         "Hint": "The Essence20 entries added to Automated Animations play this module's sounds (applies the next time they're added)."
+      },
+      "EmblemBadge": {
+        "Name": "Faction badges on tokens",
+        "Hint": "Each token wears its faction's emblem as a small badge on its top-left corner (set the images in Faction Emblems)."
+      },
+      "EmblemTurnMarkers": {
+        "Name": "Faction turn markers",
+        "Hint": "Each token's turn marker (the image under the token whose turn it is) becomes its faction's marker image, where one is set in Faction Emblems. A turn marker someone picked for a token by hand is left alone."
       }
     },
     "Config": {
@@ -158,16 +162,31 @@
     "Emblems": {
       "Title": "Faction Emblems",
       "Open": "Faction Emblems",
-      "Hint": "Your own image for each faction - under its tokens, flashing on a Morph or Transform, on dice.",
-      "Intro": "The module ships no faction symbols - they belong to Hasbro - but you can use your own. Give each faction an image (or a video); a character wears its Faction item's, else its folder's. \"Import folder\" fills the rows from a folder whose files are named for them (autobot.webp, cobra.png...). Tint colours the image (leave empty to keep its own colours).",
+      "Hint": "Your own images for each faction: a badge on its tokens' corner, a flash on a Morph or Transform, its turn marker, roll cards, dice.",
+      "Intro": "The module ships no faction symbols - they belong to Hasbro - but you can use your own. Each faction can have an emblem and a turn marker. A character wears its Faction item's, else its folder's, else the one picked in its Effects window. \"Import folder\" fills the rows from a folder whose files are named for them: cobra.png for the emblem, cobra-marker.png for the turn marker. Tint colours the emblem (leave it empty to keep its own colours).",
       "Faction": "Faction",
-      "Image": "Image",
       "Tint": "Tint",
       "Remove": "Remove",
       "Add": "Add a faction",
       "ImportFolder": "Import folder",
       "Saved": "Faction emblems saved.",
-      "Imported": "Matched {count} images to factions ({unmatched} didn't match a name)."
+      "Imported": "Matched {count} images to factions ({unmatched} didn't match a name).",
+      "Emblem": "Emblem",
+      "Marker": "Turn marker",
+      "EmblemSpec": "A badge on the token's corner (a third of its width), the flash on a Morph or Transform, roll cards and dice. Square, {ideal} px, transparent background (PNG or WebP); at least {min} px. Keep it bold and simple - it shows small.",
+      "MarkerSpec": "Foundry's own marker under the token whose turn it is. Foundry draws it square at 1.5x the token, under the token - so only the outer ring shows - and spins it. Square, {ideal} x {ideal} px (Foundry's own are 512), transparent; {min} to {max} px. Put the design in the outer band - a ring, or the symbol repeated around it.",
+      "BadgePreview": "How the badge sits on a token",
+      "MarkerPreview": "How the turn marker shows: the grey disc is the token covering its middle",
+      "Advice": {
+        "size": "{width} x {height} px:",
+        "good": "a good size.",
+        "badgeNotSquare": "not square - it keeps its shape, so it shows smaller, with a gap above and below or at the sides.",
+        "markerNotSquare": "not square - Foundry stretches a turn marker to a square, so it will look squashed.",
+        "tooSmall": "small - it may look blurry (use at least {min} px).",
+        "tooBig": "bigger than it needs to be ({ideal} px is plenty).",
+        "opaque": "a JPEG can't be transparent, so it shows as a box - use PNG or WebP.",
+        "cantLoad": "Couldn't load that file."
+      }
     },
     "SceneAmbience": {
       "Label": "Essence20 FX ambience",

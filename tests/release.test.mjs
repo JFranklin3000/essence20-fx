@@ -63,3 +63,14 @@ test('every bundled sound is credited, and only CC0 packs are', () => {
     assert.match(fs.readFileSync(path.join(root, 'sounds', 'licenses', license), 'utf8'), /CC0/, license);
   }
 });
+
+// Foundry refuses a settings menu that isn't an Application - and the throw stops every menu registered after it.
+test('every settings menu type is an Application class', () => {
+  const scripts = fs.readdirSync(path.join(root, 'scripts')).map(file => fs.readFileSync(path.join(root, 'scripts', file), 'utf8')).join('\n');
+  const init = fs.readFileSync(path.join(root, 'scripts', 'init.mjs'), 'utf8');
+  const types = [...init.matchAll(/registerMenu\([^)]*?type:\s*(\w+)/gs)].map(match => match[1]);
+  assert.ok(types.length >= 3);
+  for (const type of types) {
+    assert.match(scripts, new RegExp(`class ${type} extends [\\w.()]*(ApplicationV2|FormApplication|HandlebarsApplicationMixin)`), `${type} must extend ApplicationV2`);
+  }
+});

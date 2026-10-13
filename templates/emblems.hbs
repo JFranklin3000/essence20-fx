@@ -1,25 +1,56 @@
 <div class="e20fx-config">
   <p class="e20fx-intro">{{localize "E20FX.Emblems.Intro"}}</p>
 
-  <div class="e20fx-emblem-head">
-    <span>{{localize "E20FX.Emblems.Faction"}}</span>
-    <span>{{localize "E20FX.Emblems.Image"}}</span>
-    <span>{{localize "E20FX.Emblems.Tint"}}</span>
-    <span></span>
+  <div class="e20fx-specs">
+    <div>
+      <strong>{{localize "E20FX.Emblems.Emblem"}}</strong>
+      <p>{{localize "E20FX.Emblems.EmblemSpec" ideal=badgeSpec.idealText min=badgeSpec.min}}</p>
+    </div>
+    <div>
+      <strong>{{localize "E20FX.Emblems.Marker"}}</strong>
+      <p>{{localize "E20FX.Emblems.MarkerSpec" ideal=markerSpec.idealText min=markerSpec.min max=markerSpec.max}}</p>
+    </div>
   </div>
 
-  {{#each slots}}
-  <div class="e20fx-emblem-row">
-    <input type="text" data-field="name" value="{{name}}" aria-label="{{localize "E20FX.Emblems.Faction"}}">
-    <span class="e20fx-path">
-      {{#if img}}<img class="e20fx-emblem-preview" src="{{img}}" alt="">{{/if}}
-      <input type="text" data-field="img" value="{{img}}" aria-label="{{localize "E20FX.Emblems.Image"}}: {{name}}">
-      <button type="button" data-action="browse" data-tooltip="{{localize "E20FX.Config.Browse"}}" aria-label="{{localize "E20FX.Config.Browse"}}"><i class="fa-solid fa-image"></i></button>
-    </span>
-    <input type="text" data-field="tint" value="{{tint}}" placeholder="#ffffff" aria-label="{{localize "E20FX.Emblems.Tint"}}: {{name}}">
-    <button type="button" data-action="removeSlot" data-index="{{index}}" data-tooltip="{{localize "E20FX.Emblems.Remove"}}" aria-label="{{localize "E20FX.Emblems.Remove"}}"><i class="fa-solid fa-trash"></i></button>
+  <div class="e20fx-emblem-list">
+    {{#each slots}}
+    <section class="e20fx-emblem-row">
+      <header>
+        <input type="text" data-field="name" value="{{name}}" placeholder="{{localize "E20FX.Emblems.Faction"}}" aria-label="{{localize "E20FX.Emblems.Faction"}}">
+        <label class="e20fx-tint">{{localize "E20FX.Emblems.Tint"}}
+          <input type="text" data-field="tint" value="{{tint}}" placeholder="#ffffff">
+        </label>
+        <button type="button" data-action="removeSlot" data-index="{{index}}" data-tooltip="{{localize "E20FX.Emblems.Remove"}}" aria-label="{{localize "E20FX.Emblems.Remove"}}"><i class="fa-solid fa-trash"></i></button>
+      </header>
+
+      <div class="e20fx-image">
+        <span class="e20fx-image-label">{{localize "E20FX.Emblems.Emblem"}}</span>
+        <span class="e20fx-path">
+          <input type="text" data-field="img" value="{{img}}" aria-label="{{localize "E20FX.Emblems.Emblem"}}: {{name}}">
+          <button type="button" data-action="browse" data-field="img" data-tooltip="{{localize "E20FX.Config.Browse"}}" aria-label="{{localize "E20FX.Config.Browse"}}"><i class="fa-solid fa-image"></i></button>
+        </span>
+        <span class="e20fx-badge-preview" title="{{localize "E20FX.Emblems.BadgePreview"}}">
+          <img class="e20fx-preview-token" src="icons/svg/mystery-man.svg" alt="">
+          <img class="e20fx-preview-badge" data-preview="badge" src="{{img}}" alt="" {{#unless img}}hidden{{/unless}}>
+        </span>
+        <span class="e20fx-advice" data-advice="badge"></span>
+      </div>
+
+      <div class="e20fx-image">
+        <span class="e20fx-image-label">{{localize "E20FX.Emblems.Marker"}}</span>
+        <span class="e20fx-path">
+          <input type="text" data-field="marker" value="{{marker}}" aria-label="{{localize "E20FX.Emblems.Marker"}}: {{name}}">
+          <button type="button" data-action="browse" data-field="marker" data-tooltip="{{localize "E20FX.Config.Browse"}}" aria-label="{{localize "E20FX.Config.Browse"}}"><i class="fa-solid fa-image"></i></button>
+        </span>
+        <span class="e20fx-marker-preview" title="{{localize "E20FX.Emblems.MarkerPreview"}}">
+          <img class="e20fx-preview-marker" data-preview="marker" src="{{marker}}" alt="" {{#unless marker}}hidden{{/unless}}>
+          <img class="e20fx-preview-token" src="icons/svg/mystery-man.svg" alt="">
+        </span>
+        <span class="e20fx-advice" data-advice="marker"></span>
+      </div>
+    </section>
+    {{/each}}
   </div>
-  {{/each}}
 
   <footer class="form-footer">
     <button type="button" data-action="addSlot"><i class="fa-solid fa-plus"></i> {{localize "E20FX.Emblems.Add"}}</button>

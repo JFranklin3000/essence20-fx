@@ -39,11 +39,11 @@ test("a folder's files fill the slots named for them", () => {
 });
 
 test('ambient effects follow the state, each kind switched on its own', () => {
-  const all = { states: true, conditions: true, active: true, emblems: true };
+  const all = { states: true, conditions: true, active: true, badges: true };
   const ranger = { type: 'playerCharacter', system: { isMorphed: true }, statuses: new Set(['stunned', 'cover']) };
   assert.deepEqual(wantedAmbient(ranger, { show: all }), ['morphed', 'condition.stunned']);
   assert.deepEqual(wantedAmbient(ranger, { show: { conditions: true } }), ['condition.stunned']);
-  assert.deepEqual(wantedAmbient(ranger, { active: true, emblem: { img: 'x.webp' }, show: all }), ['active', 'morphed', 'condition.stunned', 'emblem']);
+  assert.deepEqual(wantedAmbient(ranger, { active: true, emblem: { img: 'x.webp' }, show: all }), ['active', 'morphed', 'condition.stunned', 'badge']);
   assert.deepEqual(wantedAmbient(ranger, { active: true, show: { states: true } }), ['morphed']);
   const downed = { type: 'npc', system: {}, statuses: new Set(['defeated', 'stunned']) };
   assert.deepEqual(wantedAmbient(downed, { show: all }), ['defeated']);
@@ -109,4 +109,53 @@ test('every scene ambience animation is in the free JB2A database', { skip: !fs.
   await jb2aFreeDatabase('modules');
   const exists = dbPath => dbPath.split('.').slice(1).reduce((node, part) => node?.[part], freeDatabase) !== undefined;
   assert.deepEqual(Object.values(AMBIENCES).flat().map(layer => layer.file).filter(file => !exists(file)), []);
+});
+
+test('image size advice for the badge and the turn marker', async () => {
+  const { imageAdvice } = await import('../scripts/emblem-images.mjs');
+  assert.deepEqual(imageAdvice('marker', 512, 512), ['good']);
+  assert.deepEqual(imageAdvice('marker', 1024, 1024), ['good']);
+  assert.deepEqual(imageAdvice('marker', 2048, 2048), ['tooBig']);
+  assert.deepEqual(imageAdvice('marker', 128, 128), ['tooSmall']);
+  assert.deepEqual(imageAdvice('marker', 800, 400), ['notSquare']);
+  assert.deepEqual(imageAdvice('marker', 1920, 1080), ['notSquare', 'tooBig']);
+  assert.deepEqual(imageAdvice('badge', 256, 256), ['good']);
+  assert.deepEqual(imageAdvice('badge', 32, 32), ['tooSmall']);
+  assert.deepEqual(imageAdvice('badge', 1024, 1024), ['tooBig']);
+  assert.deepEqual(imageAdvice('badge', 512, 508), ['good']);
+  assert.deepEqual(imageAdvice('nope', 10, 10), []);
+  assert.deepEqual(imageAdvice('badge', 0, 0), []);
+  assert.deepEqual(imageAdvice('badge', 256, 256, 'assets/Cobra.jpg'), ['opaque']);
+  assert.deepEqual(imageAdvice('marker', 3840, 2160, 'assets/Autobots.JPG'), ['notSquare', 'tooBig', 'opaque']);
+  assert.deepEqual(imageAdvice('badge', 256, 256, 'assets/cobra.webp'), ['good']);
+});
+
+test("a token's turn marker is only ours while it's the default or the one we set", async () => {
+  const { markerUpdate, MARKER_MODES: M } = await import('../scripts/emblem-images.mjs');
+  const defaults = { animation: 'spin', disposition: true };
+  assert.deepEqual(markerUpdate({ mode: M.DEFAULT }, null, 'cobra-marker.webp', defaults),
+    { turnMarker: { mode: M.CUSTOM, src: 'cobra-marker.webp', animation: 'spin', disposition: true }, flag: 'cobra-marker.webp' });
+  // Already ours and unchanged: nothing to write.
+  assert.equal(markerUpdate({ mode: M.CUSTOM, src: 'a.webp' }, 'a.webp', 'a.webp', defaults), null);
+  // Ours, and the faction's image changed.
+  assert.equal(markerUpdate({ mode: M.CUSTOM, src: 'a.webp' }, 'a.webp', 'b.webp', defaults).turnMarker.src, 'b.webp');
+  // Ours, and the faction has no marker any more: back to the default.
+  assert.deepEqual(markerUpdate({ mode: M.CUSTOM, src: 'a.webp' }, 'a.webp', null, defaults), { turnMarker: { mode: M.DEFAULT }, flag: null });
+  // Someone's own marker, or turned off: never touched.
+  assert.equal(markerUpdate({ mode: M.CUSTOM, src: 'mine.webp' }, null, 'cobra.webp', defaults), null);
+  assert.equal(markerUpdate({ mode: M.CUSTOM, src: 'mine.webp' }, 'a.webp', 'cobra.webp', defaults), null);
+  assert.equal(markerUpdate({ mode: M.DISABLED }, null, 'cobra.webp', defaults), null);
+  // Default, and no faction marker: nothing.
+  assert.equal(markerUpdate({ mode: M.DEFAULT }, null, '', defaults), null);
+});
+
+test('a folder fills emblems and turn markers by file name', () => {
+  const { slots, unmatched } = matchFolder([{ name: 'Autobot' }, { name: 'G.I. Joe' }, { name: 'Decepticon' }],
+    ['a/autobots.webp', 'a/Autobot-Marker.png', 'a/gi_joe_turn_marker.webp', 'a/Decepticons%20marker.png', 'a/zarana.png']);
+  assert.deepEqual(slots, [
+    { name: 'Autobot', img: 'a/autobots.webp', marker: 'a/Autobot-Marker.png' },
+    { name: 'G.I. Joe', marker: 'a/gi_joe_turn_marker.webp' },
+    { name: 'Decepticon', marker: 'a/Decepticons%20marker.png' },
+  ]);
+  assert.deepEqual(unmatched, ['a/zarana.png']);
 });

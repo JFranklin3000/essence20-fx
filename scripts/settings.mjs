@@ -27,7 +27,8 @@ export function registerSettings() {
   toggle('extras');
   toggle('ambient');
   toggle('ambientActive', { initial: false });
-  toggle('emblemsUnderTokens');
+  toggle('emblemBadge');
+  toggle('emblemTurnMarkers');
   toggle('emblemFlash');
   toggle('emblemsOnDice', { initial: false });
   toggle('diceAutoColour', { initial: false, scope: 'client' });
