@@ -187,7 +187,17 @@ export function zordMoments(hook, payload = {}, grid = 100) {
     return ranger ? [{ key: 'zord.disembarked', source: ranger }] : [];
   case 'zordRecalled':
     return payload.zordToken ? [{ key: 'zord.recalled', at: tokenSpot(payload.zordToken, grid) }] : [];
+  // Joining on the map (essence20.megaformFormed): beams from where each member stood to the Megaform's new token.
+  case 'megaformFormed':
+    return form && payload.token
+      ? [{ key: 'megaform.formed', at: tokenSpot(payload.token, grid), fromPoints: payload.from ?? [], actor: form, color: colorOf(form) }]
+      : [];
+  // Separating on the map: beams from where it stood out to each member; breaking apart (Defeated): the explosion.
   case 'megaformSplit':
+    if (form && payload.voluntary && payload.at) {
+      return [{ key: 'megaform.separated', at: payload.at, toPoints: payload.to ?? [], actor: form, color: colorOf(form) }];
+    }
+
     return form ? [{ key: 'megaform.split', source: form }] : [];
   case 'requisitionGranted':
     return payload.member ? [{ key: 'requisition.granted', source: payload.member }] : [];

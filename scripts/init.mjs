@@ -135,6 +135,12 @@ function onEvent(payload) {
     playMoments(eventMoments(payload));
   }
 
+  // A Megazord / Combiner forms when it joins on the map (essence20.megaformFormed, below) - a roster change is only that,
+  // except on 6.0.4, which has no such hook.
+  if (payload?.event == 'megaformCombined' && !legacy()) {
+    return;
+  }
+
   if ((SIGNATURE_EVENTS.includes(payload?.event) && on('signature')) || (EXTRA_EVENTS.includes(payload?.event) && on('extras'))) {
     playMoments(signatureMoments(payload, megaformSizes));
   }
@@ -147,7 +153,7 @@ registerCompat({ onRoll, onEvent });
 
 // Zords arriving, boarding and leaving; Megaforms breaking apart (forming is the megaformCombined event above).
 const EXTRA_HOOKS = ['requisitionGranted'];
-for (const hook of ['zordSummoned', 'zordArrived', 'zordPlaced', 'zordBoarded', 'zordDisembarked', 'zordRecalled', 'megaformSplit', ...EXTRA_HOOKS]) {
+for (const hook of ['zordSummoned', 'zordArrived', 'zordPlaced', 'zordBoarded', 'zordDisembarked', 'zordRecalled', 'megaformFormed', 'megaformSplit', ...EXTRA_HOOKS]) {
   Hooks.on(`essence20.${hook}`, payload => {
     if (on(EXTRA_HOOKS.includes(hook) ? 'extras' : 'signature')) {
       playMoments(zordMoments(hook, payload, canvas?.grid?.size ?? 100));

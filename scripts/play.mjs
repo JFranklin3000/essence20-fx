@@ -159,6 +159,17 @@ export function playMoment(moment, { preview = false, override = null } = {}) {
       seen(tinted(sequence.effect().file(preset.streak).atLocation({ x: moment.from.x, y: moment.from.y }).stretchTo(on).delay(Math.round(delay / 3))));
     }
 
+    // Joining and separating on the map: beams from where the members stood in to the Megaform, or out to where they land.
+    if (on && known(preset.beam)) {
+      for (const point of moment.fromPoints ?? []) {
+        seen(sequence.effect().file(preset.beam).atLocation({ x: point.x, y: point.y }).stretchTo(on));
+      }
+
+      for (const point of moment.toPoints ?? []) {
+        seen(sequence.effect().file(preset.beam).atLocation(on).stretchTo({ x: point.x, y: point.y }));
+      }
+    }
+
     if (on && known(preset.ring)) {
       const ring = sized(sequence.effect().file(preset.ring).atLocation(on), (preset.scale ?? 1.2) * 1.4);
       seen(moment.color ? ring.tint(moment.color) : ring);

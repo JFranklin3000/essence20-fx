@@ -202,6 +202,13 @@ export const SIGNATURE = {
     sound: ['scifi/forceField_001.ogg', 'scifi/forceField_002.ogg'],
   },
   'megaform.split': { impact: 'jb2a.explosion.04.blue', scale: 2.5, sound: range('scifi/explosionCrunch_', 5) },
+  // Separating on purpose (the sheet's Separate): beams out to each member, no explosion.
+  'megaform.separated': {
+    beam: 'jb2a.energy_beam.normal.blue.01',
+    impact: 'jb2a.markers.light.complete.blue',
+    scale: 2,
+    sound: ['scifi/forceField_002.ogg'],
+  },
   // Any token's teleport (Foundry's Blink / Displace, a Wrist Communicator, a Perk's moveTo): gone here, there.
   teleport: { depart: 'jb2a.misty_step.01.blue', overlay: 'jb2a.misty_step.02.blue', delay: 350, sound: ['digital/phaseJump1.ogg'] },
 };

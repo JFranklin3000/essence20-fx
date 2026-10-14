@@ -21,6 +21,10 @@ free animations and CC0 sounds from Kenney.
 - **Power Rangers:** Morph in the Ranger's own colour, Zords called / arriving / placed / boarded / left / recalled,
   Megazords forming and breaking apart.
 - **Transformers:** Transform and Bot Mode, Energon, Combiners.
+- **Megazords and Combiners on the map:** forming plays when the Megaform's sheet Join button puts its token where its
+  Zords or Transformers stood - a beam from each of them in - and Separate plays beams back out (breaking apart when
+  Defeated keeps its explosion). A roster change alone no longer plays "forms" (on 6.0.4, which has no Join, it still
+  does). Needs Essence20 6.0.5.
 - **Teleports:** any token's teleport (Foundry's Blink and Displace, a Wrist Communicator, a Perk that moves a token
   without walking it) - a Ranger's streak in their own colour across the map, a Cybertronian's bridge portal at both
   ends, a pony's sparkles, a flash there and here for everyone else. Needs Essence20 6.0.5 for the rules' teleports

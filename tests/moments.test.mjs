@@ -171,3 +171,20 @@ test("a teleport moment: from where the token left to where it landed, in the ac
   assert.equal(teleportMoments({ actor: { system: { canTransform: true }, items: [] }, from: { x: 0, y: 0 }, to: { x: 1, y: 0 }, width: 100 })[0].line, 'transformers');
   assert.deepEqual(teleportMoments({ actor: ranger, from: { x: 5, y: 5 }, to: { x: 5, y: 5 }, width: 100 }), []);
 });
+
+test('a Megaform joining on the map: beams from where its members stood; separating: beams out, not the explosion', () => {
+  const form = { uuid: 'Actor.mega', system: { color: '#3355ff' } };
+  const token = { x: 100, y: 200, width: 4, height: 4 };
+  const [formed] = zordMoments('megaformFormed', { form, token, from: [{ x: 0, y: 0 }, { x: 800, y: 0 }] }, 100);
+  assert.equal(formed.key, 'megaform.formed');
+  assert.deepEqual(formed.fromPoints, [{ x: 0, y: 0 }, { x: 800, y: 0 }]);
+  assert.equal(formed.at.x, 300);
+  assert.equal(formed.at.y, 400);
+  assert.equal(formed.actor, form);
+  assert.equal(formed.color, '#3355ff');
+  assert.deepEqual(zordMoments('megaformFormed', { form }), []);
+
+  const [separated] = zordMoments('megaformSplit', { form, voluntary: true, at: { x: 300, y: 400, w: 400 }, to: [{ x: 50, y: 50 }] });
+  assert.deepEqual({ ...separated, actor: undefined }, { key: 'megaform.separated', at: { x: 300, y: 400, w: 400 }, toPoints: [{ x: 50, y: 50 }], actor: undefined, color: '#3355ff' });
+  assert.deepEqual(zordMoments('megaformSplit', { form, voluntary: false }), [{ key: 'megaform.split', source: form }]);
+});
