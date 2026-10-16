@@ -8,7 +8,7 @@ import { registerDiceHooks } from "./dice.mjs";
 import { registerSceneAmbience } from "./scene-ambience.mjs";
 import { registerChatEmblem } from "./chat-emblem.mjs";
 import { registerTurnMarkers } from "./turn-markers.mjs";
-import { aaHasAnimation, attackGoesToAA, playWithAA } from "./aa-bridge.mjs";
+import { aaHasAnimation, attackGoesToAA, muteAAAttackCards, playWithAA } from "./aa-bridge.mjs";
 import { AutorecInstaller, installAutorec, offerAutorecOnce } from "./aa-autorec-install.mjs";
 import { legacy, registerCompat } from "./compat.mjs";
 
@@ -122,6 +122,12 @@ function onRoll(roll) {
 }
 
 Hooks.on('essence20.rollResolved', onRoll);
+
+// Automated Animations' own chat-card listener would animate our attack cards too (aa-bridge.mjs#muteAAAttackCards): it
+// registers it on ready, then calls aa.initialize. The ready fallback covers a version without that hook.
+const muteAA = () => muteAAAttackCards(() => on('combat'));
+Hooks.once('aa.initialize', muteAA);
+Hooks.once('ready', () => setTimeout(muteAA, 0));
 
 const EVENT_KINDS = { takesDamage: 'damage', defeated: 'damage', conditionGained: 'conditions' };
 const SIGNATURE_EVENTS = ['morph', 'unmorph', 'transform', 'untransform', 'resourceSpent', 'megaformCombined'];

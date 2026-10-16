@@ -4,7 +4,8 @@ import { tokenOf } from "./play.mjs";
 
 /**
  * The Automated Animations bridge (optional - only when that module is active). Automated Animations has no Essence20
- * support of its own, so it never sees our rolls; this hands it each finished attack - the attacker's token, the item,
+ * support of its own - its generic chat-card fallback can't tell hits from misses, and is muted for attack cards
+ * (muteAAAttackCards) - so this hands it each finished attack - the attacker's token, the item,
  * every target and which were hit - and Essence20 FX leaves that attack to it. Which attacks go is the GM's
  * "Attack animations by" setting: Essence20 FX only, Automated Animations for every attack, or Automated Animations
  * when it has an animation for the item (its own item settings, or a name its Automatic Recognition knows) and
@@ -56,6 +57,38 @@ export function attackGoesToAA(roll, area) {
 
   const mode = setting('attackAnimator');
   return mode == 'aa' || (mode == 'aaFirst' && aaHasAnimation(roll.item));
+}
+
+/** An Essence20 attack roll's chat card (the system stamps isAttack and the effect's itemUuid on it). */
+export const isAttackCard = message => !!message?.flags?.essence20?.isAttack;
+
+const MUTED = Symbol('e20fx-muted');
+
+/**
+ * Automated Animations does see our rolls after all: for a system it has no support for, it animates every chat card it
+ * can find an item and a speaker token on (its createChatMessage fallback), and an attack card names its weapon effect.
+ * With this bridge handing it the same attack, every attack played twice. While Essence20 FX handles attacks
+ * (`handles()`), its chat-card listener skips attack cards - the bridge gives it the targets and hits instead, and
+ * Essence20 FX plays the rest. Other cards (an item shown in chat) are left to it. Safe to call again.
+ * @param {Function} handles   Whether Essence20 FX is handling attacks right now.
+ * @param {Object} [hooks]     Foundry's Hooks (tests pass their own).
+ * @returns {Number}   How many listeners were wrapped this call.
+ */
+export function muteAAAttackCards(handles, hooks = globalThis.Hooks) {
+  let wrapped = 0;
+  for (const entry of hooks?.events?.createChatMessage ?? []) {
+    const fn = entry?.fn;
+    if (typeof fn != 'function' || fn[MUTED] || !/checkChatMessage/.test(String(fn))) {
+      continue;
+    }
+
+    entry.fn = Object.assign(function(message, ...rest) {
+      return isAttackCard(message) && handles() ? undefined : fn.call(this, message, ...rest);
+    }, { [MUTED]: true });
+    wrapped++;
+  }
+
+  return wrapped;
 }
 
 /**

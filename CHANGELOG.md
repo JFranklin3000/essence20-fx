@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- **Fixed:** with Automated Animations active, attacks it has an animation for played twice. Its own chat-card
+  listener also animated Essence20 attack cards; it now skips them while Essence20 FX handles attacks, so the bridge
+  (which knows the targets and which were hit) is the only route. Other cards it animates as before.
+
 ## 1.0.0-beta.1 - first beta
 
 The 1.0.0 feature set below, for testing on Essence20 **6.0.4**: with no essence20.* hooks there, the module rebuilds
