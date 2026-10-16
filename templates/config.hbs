@@ -35,11 +35,12 @@
       <span class="e20fx-label">{{label}}</span>
       <input type="checkbox" name="rows.{{field}}.on" {{checked on}} aria-label="{{localize "E20FX.Config.On"}}: {{label}}">
       <input type="text" name="rows.{{field}}.animation" value="{{animation}}" placeholder="{{animationDefault}}" title="{{animationDefault}}" aria-label="{{localize "E20FX.Config.Animation"}}: {{label}}">
-      <input type="text" name="rows.{{field}}.sound" value="{{sound}}" placeholder="{{soundDefault}}" title="{{soundDefault}}" aria-label="{{localize "E20FX.Config.Sound"}}: {{label}}">
+      <input type="text" name="rows.{{field}}.sound" value="{{sound}}" placeholder="{{soundDefault}}" data-default="{{soundDefault}}" title="{{soundDefault}}" aria-label="{{localize "E20FX.Config.Sound"}}: {{label}}">
       <input type="number" name="rows.{{field}}.volume" value="{{volume}}" min="0" max="1" step="0.05" placeholder="—" aria-label="{{localize "E20FX.Config.Volume"}}: {{label}}">
       <span class="e20fx-buttons">
         <button type="button" data-action="pickAnimation" data-key="{{key}}" data-tooltip="{{localize "E20FX.Config.BrowseAnimation"}}" aria-label="{{localize "E20FX.Config.BrowseAnimation"}}"><i class="fa-solid fa-clapperboard"></i></button>
         <button type="button" data-action="pickSound" data-key="{{key}}" data-tooltip="{{localize "E20FX.Config.BrowseSound"}}" aria-label="{{localize "E20FX.Config.BrowseSound"}}"><i class="fa-solid fa-music"></i></button>
+        <button type="button" class="e20fx-mute{{#if silent}} active{{/if}}" data-action="toggleSilent" data-key="{{key}}" aria-pressed="{{#if silent}}true{{else}}false{{/if}}" data-tooltip="{{localize "E20FX.Config.Silent"}}" aria-label="{{localize "E20FX.Config.Silent"}}: {{label}}"><i class="fa-solid {{#if silent}}fa-volume-xmark{{else}}fa-volume-high{{/if}}"></i></button>
         <button type="button" data-action="preview" data-key="{{key}}" data-tooltip="{{localize "E20FX.Config.Preview"}}" aria-label="{{localize "E20FX.Config.Preview"}}"><i class="fa-solid fa-play"></i></button>
         <button type="button" data-action="reset" data-key="{{key}}" data-tooltip="{{localize "E20FX.Config.Reset"}}" aria-label="{{localize "E20FX.Config.Reset"}}"><i class="fa-solid fa-rotate-left"></i></button>
       </span>

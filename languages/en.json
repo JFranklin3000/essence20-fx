@@ -96,6 +96,7 @@
       "On": "On",
       "Animation": "Animation",
       "Sound": "Sound",
+      "Silent": "No sound (click again for the default)",
       "Volume": "Volume",
       "Browse": "Browse",
       "Preview": "Preview",
