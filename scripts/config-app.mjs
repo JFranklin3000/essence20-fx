@@ -1,6 +1,6 @@
 import { MODULE_ID, SOUNDS, setting } from "./settings.mjs";
 import { allMomentKeys, momentGroups, presetFor } from "./presets.mjs";
-import { cleanImport, mainPart, parseOverrides, rowToOverride } from "./overrides.mjs";
+import { NO_SOUND, cleanImport, mainPart, parseOverrides, rowToOverride } from "./overrides.mjs";
 import { colorOf, lineOf } from "./moments.mjs";
 import { playMoment, tokenOf } from "./play.mjs";
 import { emblemSlots } from "./emblems.mjs";
@@ -40,13 +40,14 @@ export class FxConfig extends HandlebarsApplicationMixin(ApplicationV2) {
     tag: 'form',
     classes: ['essence20-fx-config'],
     window: { title: 'E20FX.Config.Title', icon: 'fa-solid fa-wand-sparkles', resizable: true },
-    position: { width: 860, height: 720 },
+    position: { width: 900, height: 720 },
     form: { handler: FxConfig.#onSubmit, closeOnSubmit: true },
     actions: {
       preview: FxConfig.#onPreview,
       reset: FxConfig.#onReset,
       pickAnimation: FxConfig.#onPick,
       pickSound: FxConfig.#onPick,
+      toggleSilent: FxConfig.#onToggleSilent,
       exportOverrides: FxConfig.#onExport,
       importOverrides: FxConfig.#onImport,
     },
@@ -79,6 +80,7 @@ export class FxConfig extends HandlebarsApplicationMixin(ApplicationV2) {
           animation: override.animation ?? '',
           animationDefault: preset[mainPart(preset)] ?? '',
           sound: override.sound ?? '',
+          silent: override.sound == NO_SOUND,
           soundDefault: preset.sound?.[0] ? `${SOUNDS}${preset.sound[0]}` : '',
           volume: override.volume ?? '',
           changed: !!overrides[key],
@@ -169,7 +171,50 @@ export class FxConfig extends HandlebarsApplicationMixin(ApplicationV2) {
       } else {
         input.value = '';
       }
+
+      if (input.name.endsWith('.sound')) {
+        this.#syncSilent(input);
+      }
     }
+  }
+
+  _onRender(context, options) {
+    super._onRender?.(context, options);
+    // Typing a path (or "none") into a sound field keeps its mute button in step.
+    for (const input of this.element.querySelectorAll('input[name$=".sound"]')) {
+      input.addEventListener('input', () => this.#syncSilent(input));
+      this.#syncSilent(input);
+    }
+  }
+
+  /** A row's sound field and mute button, shown as silent or not. */
+  #syncSilent(input) {
+    const key = input.name.slice('rows.'.length, -'.sound'.length);
+    const button = this.element.querySelector(`[data-action="toggleSilent"][data-key="${CSS.escape(this.#keyOf(key))}"]`);
+    const silent = input.value.trim().toLowerCase() == NO_SOUND;
+    input.placeholder = silent ? '' : input.dataset.default ?? '';
+    input.classList.toggle('silent', silent);
+    if (button) {
+      button.classList.toggle('active', silent);
+      button.setAttribute('aria-pressed', String(silent));
+      button.querySelector('i')?.classList.replace(silent ? 'fa-volume-high' : 'fa-volume-xmark', silent ? 'fa-volume-xmark' : 'fa-volume-high');
+    }
+  }
+
+  /** A form field key's moment key. */
+  #keyOf(field) {
+    return allMomentKeys().find(key => fieldKey(key) == field) ?? field;
+  }
+
+  /** No sound for this row (the sound field reads "none"), or back to the default (saved on Save). */
+  static #onToggleSilent(event, button) {
+    const input = this.element.querySelector(`[name="rows.${fieldKey(button.dataset.key)}.sound"]`);
+    if (!input) {
+      return;
+    }
+
+    input.value = input.value.trim().toLowerCase() == NO_SOUND ? '' : NO_SOUND;
+    this.#syncSilent(input);
   }
 
   /** A file browser for a row's animation or sound. */
@@ -177,7 +222,15 @@ export class FxConfig extends HandlebarsApplicationMixin(ApplicationV2) {
     const isSound = button.dataset.action == 'pickSound';
     const input = this.element.querySelector(`[name="rows.${fieldKey(button.dataset.key)}.${isSound ? 'sound' : 'animation'}"]`);
     const FilePicker = foundry.applications.apps.FilePicker.implementation;
-    new FilePicker({ type: isSound ? 'audio' : 'imagevideo', current: input?.value || '', callback: path => { if (input) input.value = path; } }).render(true);
+    new FilePicker({
+      type: isSound ? 'audio' : 'imagevideo', current: input?.value == NO_SOUND ? '' : input?.value || '',
+      callback: path => {
+        if (input) {
+          input.value = path;
+          if (isSound) this.#syncSilent(input);
+        }
+      },
+    }).render(true);
   }
 
   /** Save the stored overrides (not unsaved edits) as a JSON file another table can import. */
@@ -216,6 +269,8 @@ export class FxConfig extends HandlebarsApplicationMixin(ApplicationV2) {
         set('on', !override.off);
         set('animation', override.animation);
         set('sound', override.sound);
+        const sound = this.element.querySelector(`[name="rows.${field}.sound"]`);
+        if (sound) this.#syncSilent(sound);
         set('volume', override.volume);
       }
 
