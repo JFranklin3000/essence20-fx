@@ -1,0 +1,106 @@
+{
+  "namespace": "essence20-fx",
+  "id": "configureFx",
+  "title": "E20FX.Tours.ConfigureFx.Title",
+  "description": "E20FX.Tours.ConfigureFx.Description",
+  "display": true,
+  "restricted": true,
+  "canBeResumed": true,
+  "suggestedNextTours": [
+    "essence20-fx.factionEmblems"
+  ],
+  "steps": [
+    {
+      "id": "intro",
+      "title": "E20FX.Tours.ConfigureFx.Intro.Title",
+      "content": "E20FX.Tours.ConfigureFx.Intro.Content"
+    },
+    {
+      "id": "button",
+      "title": "E20FX.Tours.ConfigureFx.Button.Title",
+      "content": "E20FX.Tours.ConfigureFx.Button.Content",
+      "app": "settings",
+      "tab": "essence20-fx",
+      "tabGroup": "categories",
+      "selector": "#settings-config button[data-key=\"essence20-fx.configure\"]",
+      "tooltipDirection": "LEFT"
+    },
+    {
+      "id": "groups",
+      "title": "E20FX.Tours.ConfigureFx.Groups.Title",
+      "content": "E20FX.Tours.ConfigureFx.Groups.Content",
+      "app": "configureFx",
+      "selector": "#essence20-fx-config .e20fx-group",
+      "tooltipDirection": "RIGHT"
+    },
+    {
+      "id": "on",
+      "title": "E20FX.Tours.ConfigureFx.On.Title",
+      "content": "E20FX.Tours.ConfigureFx.On.Content",
+      "app": "configureFx",
+      "selector": "#essence20-fx-config .e20fx-row input[type=\"checkbox\"]",
+      "tooltipDirection": "RIGHT"
+    },
+    {
+      "id": "animation",
+      "title": "E20FX.Tours.ConfigureFx.Animation.Title",
+      "content": "E20FX.Tours.ConfigureFx.Animation.Content",
+      "app": "configureFx",
+      "selector": "#essence20-fx-config .e20fx-row input[name$=\".animation\"]",
+      "tooltipDirection": "DOWN"
+    },
+    {
+      "id": "sound",
+      "title": "E20FX.Tours.ConfigureFx.Sound.Title",
+      "content": "E20FX.Tours.ConfigureFx.Sound.Content",
+      "app": "configureFx",
+      "selector": "#essence20-fx-config .e20fx-row input[name$=\".sound\"]",
+      "tooltipDirection": "DOWN"
+    },
+    {
+      "id": "volume",
+      "title": "E20FX.Tours.ConfigureFx.Volume.Title",
+      "content": "E20FX.Tours.ConfigureFx.Volume.Content",
+      "app": "configureFx",
+      "selector": "#essence20-fx-config .e20fx-row input[name$=\".volume\"]",
+      "tooltipDirection": "DOWN"
+    },
+    {
+      "id": "preview",
+      "title": "E20FX.Tours.ConfigureFx.Preview.Title",
+      "content": "E20FX.Tours.ConfigureFx.Preview.Content",
+      "app": "configureFx",
+      "selector": "#essence20-fx-config .e20fx-row [data-action=\"preview\"]",
+      "tooltipDirection": "LEFT"
+    },
+    {
+      "id": "reset",
+      "title": "E20FX.Tours.ConfigureFx.Reset.Title",
+      "content": "E20FX.Tours.ConfigureFx.Reset.Content",
+      "app": "configureFx",
+      "selector": "#essence20-fx-config .e20fx-row [data-action=\"reset\"]",
+      "tooltipDirection": "LEFT"
+    },
+    {
+      "id": "share",
+      "title": "E20FX.Tours.ConfigureFx.Share.Title",
+      "content": "E20FX.Tours.ConfigureFx.Share.Content",
+      "app": "configureFx",
+      "selector": "#essence20-fx-config [data-action=\"exportOverrides\"]",
+      "tooltipDirection": "UP"
+    },
+    {
+      "id": "save",
+      "title": "E20FX.Tours.ConfigureFx.Save.Title",
+      "content": "E20FX.Tours.ConfigureFx.Save.Content",
+      "app": "configureFx",
+      "selector": "#essence20-fx-config footer button[type=\"submit\"]",
+      "tooltipDirection": "UP"
+    },
+    {
+      "id": "outro",
+      "title": "E20FX.Tours.ConfigureFx.Outro.Title",
+      "content": "E20FX.Tours.ConfigureFx.Outro.Content"
+    }
+  ]
+}

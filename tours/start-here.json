@@ -1,0 +1,125 @@
+{
+  "namespace": "essence20-fx",
+  "id": "startHere",
+  "title": "E20FX.Tours.StartHere.Title",
+  "description": "E20FX.Tours.StartHere.Description",
+  "display": true,
+  "restricted": true,
+  "canBeResumed": true,
+  "suggestedNextTours": [
+    "essence20-fx.configureFx",
+    "essence20-fx.factionEmblems",
+    "essence20-fx.sceneAmbience",
+    "essence20-fx.myEffects"
+  ],
+  "steps": [
+    {
+      "id": "intro",
+      "title": "E20FX.Tours.StartHere.Intro.Title",
+      "content": "E20FX.Tours.StartHere.Intro.Content"
+    },
+    {
+      "id": "settings",
+      "title": "E20FX.Tours.StartHere.Settings.Title",
+      "content": "E20FX.Tours.StartHere.Settings.Content",
+      "sidebarTab": "settings",
+      "selector": "[data-action=\"openApp\"][data-app=\"configure\"]",
+      "tooltipDirection": "LEFT"
+    },
+    {
+      "id": "category",
+      "title": "E20FX.Tours.StartHere.Category.Title",
+      "content": "E20FX.Tours.StartHere.Category.Content",
+      "app": "settings",
+      "tab": "essence20-fx",
+      "tabGroup": "categories",
+      "selector": "#settings-config nav [data-tab=\"essence20-fx\"]",
+      "tooltipDirection": "RIGHT"
+    },
+    {
+      "id": "enabled",
+      "title": "E20FX.Tours.StartHere.Enabled.Title",
+      "content": "E20FX.Tours.StartHere.Enabled.Content",
+      "app": "settings",
+      "tab": "essence20-fx",
+      "tabGroup": "categories",
+      "selector": "#settings-config section[data-tab=\"essence20-fx\"] .form-group:has([name=\"essence20-fx.enabled\"])",
+      "tooltipDirection": "LEFT"
+    },
+    {
+      "id": "kinds",
+      "title": "E20FX.Tours.StartHere.Kinds.Title",
+      "content": "E20FX.Tours.StartHere.Kinds.Content",
+      "app": "settings",
+      "tab": "essence20-fx",
+      "tabGroup": "categories",
+      "selector": "#settings-config section[data-tab=\"essence20-fx\"] .form-group:has([name=\"essence20-fx.combat\"])",
+      "tooltipDirection": "LEFT"
+    },
+    {
+      "id": "lasting",
+      "title": "E20FX.Tours.StartHere.Lasting.Title",
+      "content": "E20FX.Tours.StartHere.Lasting.Content",
+      "app": "settings",
+      "tab": "essence20-fx",
+      "tabGroup": "categories",
+      "selector": "#settings-config section[data-tab=\"essence20-fx\"] .form-group:has([name=\"essence20-fx.ambient\"])",
+      "tooltipDirection": "LEFT"
+    },
+    {
+      "id": "emblems",
+      "title": "E20FX.Tours.StartHere.Emblems.Title",
+      "content": "E20FX.Tours.StartHere.Emblems.Content",
+      "app": "settings",
+      "tab": "essence20-fx",
+      "tabGroup": "categories",
+      "selector": "#settings-config section[data-tab=\"essence20-fx\"] .form-group:has([name=\"essence20-fx.emblemBadge\"])",
+      "tooltipDirection": "LEFT"
+    },
+    {
+      "id": "animator",
+      "title": "E20FX.Tours.StartHere.Animator.Title",
+      "content": "E20FX.Tours.StartHere.Animator.Content",
+      "app": "settings",
+      "tab": "essence20-fx",
+      "tabGroup": "categories",
+      "selector": "#settings-config section[data-tab=\"essence20-fx\"] .form-group:has([name=\"essence20-fx.attackAnimator\"])",
+      "tooltipDirection": "LEFT"
+    },
+    {
+      "id": "volume",
+      "title": "E20FX.Tours.StartHere.Volume.Title",
+      "content": "E20FX.Tours.StartHere.Volume.Content",
+      "app": "settings",
+      "tab": "essence20-fx",
+      "tabGroup": "categories",
+      "selector": "#settings-config section[data-tab=\"essence20-fx\"] .form-group:has([name=\"essence20-fx.volume\"])",
+      "tooltipDirection": "LEFT"
+    },
+    {
+      "id": "reducedMotion",
+      "title": "E20FX.Tours.StartHere.ReducedMotion.Title",
+      "content": "E20FX.Tours.StartHere.ReducedMotion.Content",
+      "app": "settings",
+      "tab": "essence20-fx",
+      "tabGroup": "categories",
+      "selector": "#settings-config section[data-tab=\"essence20-fx\"] .form-group:has([name=\"essence20-fx.reducedMotion\"])",
+      "tooltipDirection": "LEFT"
+    },
+    {
+      "id": "menus",
+      "title": "E20FX.Tours.StartHere.Menus.Title",
+      "content": "E20FX.Tours.StartHere.Menus.Content",
+      "app": "settings",
+      "tab": "essence20-fx",
+      "tabGroup": "categories",
+      "selector": "#settings-config section[data-tab=\"essence20-fx\"] .form-group:has(button[data-key=\"essence20-fx.configure\"])",
+      "tooltipDirection": "LEFT"
+    },
+    {
+      "id": "outro",
+      "title": "E20FX.Tours.StartHere.Outro.Title",
+      "content": "E20FX.Tours.StartHere.Outro.Content"
+    }
+  ]
+}

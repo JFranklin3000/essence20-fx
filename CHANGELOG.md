@@ -7,6 +7,17 @@
   (which knows the targets and which were hit) is the only route. Other cards it animates as before.
 - **Configure FX:** a mute button beside each sound - no sound for that effect (the field reads "none", struck
   through); click again for the default.
+- **Healing:** a glow when a token's Health comes back (green; blue for a Cybertronian, hearts for a pony) and gold
+  when its Stun is recovered - under the Damage, Defeat and healing switch. A new maximum or a Morph moving Health
+  doesn't count.
+- **Combat stings** (new switch, on by default): "Combat!" and a bell as combat starts, "Round N" each round, "Your turn"
+  in the character's colour for the players who own whoever is up (not for NPCs), and a bell as it ends. Played once by
+  the active GM for the table; with a Foundry Combat Theme picked its sounds play instead and these show only their
+  words. Each is a row in Configure FX (its own sound, volume, or a screen-wide animation), with Preview.
+- **Guided tours**, under Manage Tours: **Start here** (the settings), **Configure FX**, **Faction Emblems** and **Scene
+  ambience** for the GM, and **Effects for players** (Reduced motion, dice colours, a character's own Effects) for
+  everyone. Each opens the windows it talks about and saves nothing. A GM is offered *Start here* once per world. Needs
+  an Essence20 version with the system's tour engine; on 6.0.4 there are no tours.
 
 ## 1.0.0-beta.1 - first beta
 

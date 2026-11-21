@@ -42,6 +42,11 @@ https://github.com/JFranklin3000/essence20-fx/releases/download/beta/module.json
 - **Area attacks:** a burst over the placed shape - an explosion (or fireball, frost, shockwave...) for a circle or an
   area around the user, a breath-weapon burst along a cone or line - then an impact on each target hit.
 - **Damage:** the token flashes in the damage type's colour and shakes. **Defeated:** a puff of smoke and a skull.
+- **Healing:** a green glow when a token's Health comes back (blue for a Cybertronian's repairs, hearts for a pony), gold
+  when its Stun is recovered.
+- **Combat:** "Combat!" across the screen and a bell when combat starts, the round number each new round, "Your turn"
+  (in the character's own colour) for the players whose character is up, and a bell when it ends. With a Foundry
+  **Combat Theme** picked (Core settings), its sounds play instead and these only show their words.
 - **Conditions:** a short icon and sound as one arrives - Stunned stars, Frightened, Poisoned, Prone, chains for
   Grappled / Restrained / Immobilized, a cracked shield for Armor Stripped, and more.
 - **Power Rangers:** Morphing in the Ranger's own colour, a Zord being called, arriving, landing in a cloud of dust,
@@ -69,7 +74,7 @@ a big fight stays readable.
 | Setting | Who | What |
 |---|---|---|
 | Play effects | GM | Everything on or off for the table |
-| Attack / Damage and Defeat / Condition / Morph, Transform and Zord / Story Point, Spellcasting and teamwork effects | GM | Each kind on or off |
+| Attack / Damage, Defeat and healing / Condition / Morph, Transform and Zord / Story Point, Spellcasting and teamwork / Combat start, round and turn effects | GM | Each kind on or off |
 | Lasting effects, Ring on the active combatant | GM | The effects that stay while a state lasts |
 | Scene ambience | GM | Play the loop each scene picks |
 | Faction badges / turn markers / flash / on roll cards / on dice | GM | Where the emblems show |
@@ -78,6 +83,10 @@ a big fight stays readable.
 | Dice in my character's colours | Each player | With Dice So Nice: a Ranger in their colour, else their faction's or line's |
 
 Each player can also turn effects or sounds off entirely in **Sequencer**'s own settings.
+
+**Guided tours** (Manage Tours, in the Settings sidebar): *Start here*, *Configure FX*, *Faction Emblems* and *Scene
+ambience* for the GM, and *Effects for players* for everyone. They open the windows they talk about and save nothing. A
+GM is offered *Start here* once, the first time the module is on in a world.
 
 **Configure FX** (GM): every effect in one list - turn it off, give it another animation (a Sequencer database path
 like `jb2a.impact.004.blue`, or any video file) or sound (a file, or `none`), set its volume, Preview it on the selected

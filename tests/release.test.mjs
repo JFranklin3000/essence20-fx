@@ -32,7 +32,8 @@ function loadedFiles() {
     }
   }
 
-  return [...new Set([...files, ...allSoundFiles().map(sound => `sounds/${sound}`), 'sounds/CREDITS.md'])];
+  const tours = fs.readdirSync(path.join(root, 'tours')).map(file => `tours/${file}`);
+  return [...new Set([...files, ...tours, ...allSoundFiles().map(sound => `sounds/${sound}`), 'sounds/CREDITS.md'])];
 }
 
 test('everything the module loads is in the release zip and on disk', () => {

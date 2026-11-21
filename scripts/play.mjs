@@ -36,11 +36,14 @@ function known(path) {
   }
 }
 
-/** The users who see the animations and hear the sounds: { sight: ids|null, sound: ids|null } (null = everyone). */
-function audience(tokens, hidden = false) {
+/**
+ * The users who see the animations and hear the sounds: { sight: ids|null, sound: ids|null } (null = everyone).
+ * `only` limits it to those users (a turn's "Your turn" goes to the players whose turn it is).
+ */
+function audience(tokens, hidden = false, only = null) {
   const users = game.users.filter(user => user.active);
   const secret = hidden || tokens.some(token => token?.document?.hidden);
-  const hearing = secret ? users.filter(user => user.isGM) : users;
+  const hearing = (secret ? users.filter(user => user.isGM) : users).filter(user => !only || only.includes(user.id));
   const seeing = hearing.filter(user => !user.getFlag?.(MODULE_ID, 'reducedMotion'));
   const ids = list => (list.length == users.length ? null : list.map(user => user.id));
   return { sight: ids(seeing), sound: ids(hearing) };
@@ -102,6 +105,10 @@ function overridesFor(moment) {
 export function playMoment(moment, { preview = false, override = null } = {}) {
   const look = presetFor(moment.key, { damageType: moment.damageType, style: moment.style, line: moment.line, patreon: jb2aPatreon() });
   const preset = applyOverrides(look, [...overridesFor(moment), override]);
+  if (moment.screen) {
+    return preset ? playScreen(moment, preset, { preview }) : false;
+  }
+
   const source = tokenOf(moment.source);
   const target = moment.target ? tokenOf(moment.target) : null;
   // An area can be away from every token (a circle placed out in the open) - it only needs a scene; a token leaving the
@@ -202,6 +209,71 @@ export function playMoment(moment, { preview = false, override = null } = {}) {
     // A GM's or actor's own sound is a full path; the presets' are under sounds/.
     const files = preset.sound.map(file => (preset.soundIsPath ? file : `${SOUNDS}${file}`));
     const section = sequence.sound().file(files).volume(preset.volume ?? setting('volume'));
+    if (preview) {
+      section.locally();
+    } else if (sound) {
+      section.forUsers(sound);
+    }
+  }
+
+  sequence.play();
+  return true;
+}
+
+/** The words a screen moment shows: its text key, filled in. */
+export function bannerText(text) {
+  if (!text?.key) {
+    return '';
+  }
+
+  return text.data ? game.i18n.format(text.key, text.data) : game.i18n.localize(text.key);
+}
+
+/**
+ * A moment played across the screen rather than on a token (the combat stings): a line of text, the GM's animation if
+ * they gave it one, and the sound. `moment.users` limits who gets it; `moment.silent` drops the sound (Foundry's own
+ * Combat Theme is playing one).
+ */
+function playScreen(moment, preset, { preview = false } = {}) {
+  const { sight, sound } = preview ? { sight: null, sound: null } : audience([], false, moment.users ?? null);
+  if (sight?.length === 0 && sound?.length === 0) {
+    return false;
+  }
+
+  const sequence = new Sequence({ moduleName: MODULE_ID, softFail: true });
+  const seen = section => (preview ? section.locally() : sight ? section.forUsers(sight) : section);
+  const delay = Number(moment.delay) || 0;
+  const banner = preset.banner ?? {};
+  const anchor = { x: 0.5, y: banner.y ?? 0.3 };
+  const words = bannerText(moment.text);
+
+  if (sight?.length !== 0) {
+    if (known(preset.overlay)) {
+      seen(sequence.effect().file(preset.overlay).screenSpace().screenSpaceAboveUI().screenSpaceAnchor(anchor).delay(delay));
+    }
+
+    if (preset.banner && words) {
+      const fill = /^#[0-9a-f]{6}$/i.test(moment.color ?? '') ? moment.color : banner.color ?? '#ffffff';
+      seen(sequence.effect().text(words, {
+        fill,
+        fontFamily: 'Signika',
+        fontSize: banner.size ?? 56,
+        fontWeight: 'bold',
+        stroke: '#000000',
+        strokeThickness: Math.round((banner.size ?? 56) / 9),
+        dropShadow: true,
+        dropShadowColor: '#000000',
+        dropShadowBlur: 6,
+        dropShadowDistance: 3,
+        align: 'center',
+      }).screenSpace().screenSpaceAboveUI().screenSpaceAnchor(anchor).duration(banner.duration ?? 2200).fadeIn(250).fadeOut(600)
+        .scaleIn(0.6, 350, { ease: 'easeOutBack' }).delay(delay));
+    }
+  }
+
+  if (preset.sound?.length && sound?.length !== 0 && !moment.silent) {
+    const files = preset.sound.map(file => (preset.soundIsPath ? file : `${SOUNDS}${file}`));
+    const section = sequence.sound().file(files).volume(preset.volume ?? setting('volume')).delay(delay);
     if (preview) {
       section.locally();
     } else if (sound) {

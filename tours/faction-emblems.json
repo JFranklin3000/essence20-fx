@@ -1,0 +1,87 @@
+{
+  "namespace": "essence20-fx",
+  "id": "factionEmblems",
+  "title": "E20FX.Tours.FactionEmblems.Title",
+  "description": "E20FX.Tours.FactionEmblems.Description",
+  "display": true,
+  "restricted": true,
+  "canBeResumed": true,
+  "steps": [
+    {
+      "id": "intro",
+      "title": "E20FX.Tours.FactionEmblems.Intro.Title",
+      "content": "E20FX.Tours.FactionEmblems.Intro.Content"
+    },
+    {
+      "id": "button",
+      "title": "E20FX.Tours.FactionEmblems.Button.Title",
+      "content": "E20FX.Tours.FactionEmblems.Button.Content",
+      "app": "settings",
+      "tab": "essence20-fx",
+      "tabGroup": "categories",
+      "selector": "#settings-config button[data-key=\"essence20-fx.emblems\"]",
+      "tooltipDirection": "LEFT"
+    },
+    {
+      "id": "specs",
+      "title": "E20FX.Tours.FactionEmblems.Specs.Title",
+      "content": "E20FX.Tours.FactionEmblems.Specs.Content",
+      "app": "factionEmblems",
+      "selector": "#essence20-fx-emblems .e20fx-specs",
+      "tooltipDirection": "DOWN"
+    },
+    {
+      "id": "name",
+      "title": "E20FX.Tours.FactionEmblems.Name.Title",
+      "content": "E20FX.Tours.FactionEmblems.Name.Content",
+      "app": "factionEmblems",
+      "selector": "#essence20-fx-emblems .e20fx-emblem-row > header",
+      "tooltipDirection": "DOWN"
+    },
+    {
+      "id": "emblem",
+      "title": "E20FX.Tours.FactionEmblems.Emblem.Title",
+      "content": "E20FX.Tours.FactionEmblems.Emblem.Content",
+      "app": "factionEmblems",
+      "selector": "#essence20-fx-emblems .e20fx-image:has(.e20fx-badge-preview)",
+      "tooltipDirection": "DOWN"
+    },
+    {
+      "id": "marker",
+      "title": "E20FX.Tours.FactionEmblems.Marker.Title",
+      "content": "E20FX.Tours.FactionEmblems.Marker.Content",
+      "app": "factionEmblems",
+      "selector": "#essence20-fx-emblems .e20fx-image:has(.e20fx-marker-preview)",
+      "tooltipDirection": "DOWN"
+    },
+    {
+      "id": "add",
+      "title": "E20FX.Tours.FactionEmblems.Add.Title",
+      "content": "E20FX.Tours.FactionEmblems.Add.Content",
+      "app": "factionEmblems",
+      "selector": "#essence20-fx-emblems [data-action=\"addSlot\"]",
+      "tooltipDirection": "UP"
+    },
+    {
+      "id": "import",
+      "title": "E20FX.Tours.FactionEmblems.Import.Title",
+      "content": "E20FX.Tours.FactionEmblems.Import.Content",
+      "app": "factionEmblems",
+      "selector": "#essence20-fx-emblems [data-action=\"importFolder\"]",
+      "tooltipDirection": "UP"
+    },
+    {
+      "id": "save",
+      "title": "E20FX.Tours.FactionEmblems.Save.Title",
+      "content": "E20FX.Tours.FactionEmblems.Save.Content",
+      "app": "factionEmblems",
+      "selector": "#essence20-fx-emblems footer button[type=\"submit\"]",
+      "tooltipDirection": "UP"
+    },
+    {
+      "id": "outro",
+      "title": "E20FX.Tours.FactionEmblems.Outro.Title",
+      "content": "E20FX.Tours.FactionEmblems.Outro.Content"
+    }
+  ]
+}
