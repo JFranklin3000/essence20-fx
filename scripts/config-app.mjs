@@ -134,6 +134,14 @@ export class FxConfig extends HandlebarsApplicationMixin(ApplicationV2) {
   static #onPreview(event, button) {
     const key = button.dataset.key;
     const actor = this.actor ?? canvas.tokens?.controlled?.[0]?.actor ?? null;
+    // The combat stings play across the screen: no token needed. "Your turn" names the selected token, if any.
+    if (key.startsWith('combat.')) {
+      const name = actor?.name ?? game.user.character?.name ?? game.user.name;
+      const text = { 'combat.start': { key: 'E20FX.Combat.Start' }, 'combat.round': { key: 'E20FX.Combat.Round', data: { round: 2 } }, 'combat.turn': { key: 'E20FX.Combat.Turn', data: { name } }, 'combat.end': { key: 'E20FX.Combat.End' } }[key];
+      const override = rowToOverride(this.#row(key));
+      return playMoment({ key, screen: true, text, source: actor ?? undefined, color: key == 'combat.turn' ? colorOf(actor) : null }, { preview: true, override: override?.off ? { ...override, off: false } : override });
+    }
+
     const source = tokenOf(actor);
     if (!source) {
       return ui.notifications.warn(game.i18n.localize('E20FX.Config.PreviewNeedsToken'));

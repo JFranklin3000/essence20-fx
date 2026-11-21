@@ -75,6 +75,22 @@ export const GENERIC = {
     overlay: 'jb2a.icon.skull.purple',
     sound: ['digital/lowDown.ogg'],
   },
+
+  // Healing: Health back up (green), Stun recovered (gold).
+  'heal.health': { overlay: 'jb2a.healing_generic.400px.green', scale: 1.4, sound: ['digital/highUp.ogg'] },
+  'heal.stun': { overlay: 'jb2a.healing_generic.400px.yellow', scale: 1.2, sound: ['digital/zapThreeToneUp.ogg'] },
+};
+
+/**
+ * Combat stings, played across the screen rather than on a token. Extra part:
+ *   banner   a line of text: { size (px), color, y (0 top - 1 bottom) }. The words are the moment's (moments.mjs#combatMoments).
+ * A GM's animation for one of these (Configure FX) plays in the middle of the screen.
+ */
+export const COMBAT = {
+  'combat.start': { banner: { size: 84, color: '#ffd54a', y: 0.3 }, sound: ['impact/impactBell_heavy_000.ogg'] },
+  'combat.round': { banner: { size: 56, color: '#ffffff', y: 0.3 }, sound: ['impact/impactMetal_light_000.ogg'] },
+  'combat.turn': { banner: { size: 44, color: '#8fd3ff', y: 0.72 }, sound: ['interface/select_001.ogg'] },
+  'combat.end': { banner: { size: 64, color: '#ffffff', y: 0.3 }, sound: ['impact/impactBell_heavy_000.ogg'] },
 };
 
 /**
@@ -242,9 +258,12 @@ export const LINES = {
   },
   // A Cybertronian steps through a bridge: a portal opens at both ends.
   transformers: {
+    // A Cybertronian is repaired: a blue glow rather than green.
+    'heal.health': { overlay: 'jb2a.healing_generic.400px.blue', scale: 1.4, sound: ['digital/powerUp3.ogg'] },
     teleport: { depart: 'jb2a.portals.horizontal.ring.bright_yellow', overlay: 'jb2a.portals.horizontal.ring.bright_yellow', scale: 1.6, delay: 500, sound: ['scifi/forceField_001.ogg'] },
   },
   myLittlePony: {
+    'heal.health': { overlay: 'jb2a.healing_generic.400px.purple', impact: 'jb2a.icon.heart.pink', scale: 1.4, sound: ['interface/pluck_001.ogg'] },
     teleport: { depart: 'jb2a.twinkling_stars.points07.white', overlay: 'jb2a.twinkling_stars.points07.white', impact: 'jb2a.misty_step.02.blue', delay: 300, sound: ['interface/pluck_001.ogg'] },
     'assist.given': { overlay: 'jb2a.icon.heart.pink', impact: 'jb2a.butterflies.outward_burst.01.bluepurple', sound: ['interface/pluck_001.ogg'] },
     rerolled: { overlay: 'jb2a.firework.02.orangeyellow.01', sound: ['interface/maximize_001.ogg'] },
@@ -300,7 +319,7 @@ export const PATREON = {};
  * @returns {Object|null}
  */
 export function presetFor(key, { damageType = null, style = null, line = null, patreon = false } = {}) {
-  const base = key.startsWith('condition.') ? CONDITIONS[key.slice('condition.'.length)] : GENERIC[key] ?? SIGNATURE[key] ?? MOMENTS[key];
+  const base = key.startsWith('condition.') ? CONDITIONS[key.slice('condition.'.length)] : GENERIC[key] ?? SIGNATURE[key] ?? MOMENTS[key] ?? COMBAT[key];
   if (!base) {
     return null;
   }
@@ -336,6 +355,7 @@ export function allAnimationPaths() {
     ...Object.values(GENERIC).flatMap(parts),
     ...Object.values(SIGNATURE).flatMap(parts),
     ...Object.values(MOMENTS).flatMap(parts),
+    ...Object.values(COMBAT).flatMap(parts),
     ...Object.values(LINES).flatMap(line => Object.values(line).flatMap(parts)),
     ...Object.values(STYLES).flatMap(look => [...parts(look.ranged ?? {}), ...parts(look.melee ?? {}), ...Object.values(look.area ?? {})]),
     ...Object.values(CONDITIONS).flatMap(parts),
@@ -346,7 +366,7 @@ export function allAnimationPaths() {
 /** Every sound file a preset can play - for the file check in tests. */
 export function allSoundFiles() {
   return [...new Set([
-    ...Object.values(GENERIC), ...Object.values(CONDITIONS), ...Object.values(SIGNATURE), ...Object.values(MOMENTS),
+    ...Object.values(GENERIC), ...Object.values(CONDITIONS), ...Object.values(SIGNATURE), ...Object.values(MOMENTS), ...Object.values(COMBAT),
     ...Object.values(LINES).flatMap(line => Object.values(line)),
     ...Object.values({ ...DAMAGE, ...STYLES }).flatMap(look => [look.ranged ?? {}, look.melee ?? {}]),
   ].flatMap(preset => preset.sound ?? []))];
@@ -360,10 +380,11 @@ export function momentGroups() {
   return [
     { id: 'attacks', keys: ['attack.ranged.hit', 'attack.ranged.critical', 'attack.ranged.miss', 'attack.melee.hit', 'attack.melee.critical', 'attack.melee.miss', 'attack.fumble'] },
     { id: 'areas', keys: ['area.circle', 'area.emanation', 'area.cone', 'area.line', 'attack.area.hit', 'attack.area.critical'] },
-    { id: 'damage', keys: ['damage.taken', 'damage.defeated'] },
+    { id: 'damage', keys: ['damage.taken', 'damage.defeated', 'heal.health', 'heal.stun'] },
     { id: 'conditions', keys: Object.keys(CONDITIONS).map(id => `condition.${id}`) },
     { id: 'signature', keys: Object.keys(SIGNATURE) },
     { id: 'extras', keys: Object.keys(MOMENTS) },
+    { id: 'combat', keys: Object.keys(COMBAT) },
   ];
 }
 

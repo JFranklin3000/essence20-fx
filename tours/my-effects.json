@@ -1,0 +1,89 @@
+{
+  "namespace": "essence20-fx",
+  "id": "myEffects",
+  "title": "E20FX.Tours.MyEffects.Title",
+  "description": "E20FX.Tours.MyEffects.Description",
+  "display": true,
+  "restricted": false,
+  "canBeResumed": true,
+  "steps": [
+    {
+      "id": "intro",
+      "title": "E20FX.Tours.MyEffects.Intro.Title",
+      "content": "E20FX.Tours.MyEffects.Intro.Content"
+    },
+    {
+      "id": "settings",
+      "title": "E20FX.Tours.MyEffects.Settings.Title",
+      "content": "E20FX.Tours.MyEffects.Settings.Content",
+      "sidebarTab": "settings",
+      "selector": "[data-action=\"openApp\"][data-app=\"configure\"]",
+      "tooltipDirection": "LEFT"
+    },
+    {
+      "id": "reducedMotion",
+      "title": "E20FX.Tours.MyEffects.ReducedMotion.Title",
+      "content": "E20FX.Tours.MyEffects.ReducedMotion.Content",
+      "app": "settings",
+      "tab": "essence20-fx",
+      "tabGroup": "categories",
+      "selector": "#settings-config section[data-tab=\"essence20-fx\"] .form-group:has([name=\"essence20-fx.reducedMotion\"])",
+      "tooltipDirection": "LEFT"
+    },
+    {
+      "id": "dice",
+      "title": "E20FX.Tours.MyEffects.Dice.Title",
+      "content": "E20FX.Tours.MyEffects.Dice.Content",
+      "app": "settings",
+      "tab": "essence20-fx",
+      "tabGroup": "categories",
+      "selector": "#settings-config section[data-tab=\"essence20-fx\"] .form-group:has([name=\"essence20-fx.diceAutoColour\"])",
+      "tooltipDirection": "LEFT"
+    },
+    {
+      "id": "header",
+      "title": "E20FX.Tours.MyEffects.Header.Title",
+      "content": "E20FX.Tours.MyEffects.Header.Content",
+      "app": "character",
+      "selector": ".window-header [data-action=\"toggleControls\"]",
+      "tooltipDirection": "DOWN"
+    },
+    {
+      "id": "color",
+      "title": "E20FX.Tours.MyEffects.Color.Title",
+      "content": "E20FX.Tours.MyEffects.Color.Content",
+      "app": "actorEffects",
+      "selector": ".form-group:has([name=\"color\"])",
+      "tooltipDirection": "DOWN"
+    },
+    {
+      "id": "faction",
+      "title": "E20FX.Tours.MyEffects.Faction.Title",
+      "content": "E20FX.Tours.MyEffects.Faction.Content",
+      "app": "actorEffects",
+      "selector": ".form-group:has([name=\"faction\"])",
+      "tooltipDirection": "DOWN"
+    },
+    {
+      "id": "rows",
+      "title": "E20FX.Tours.MyEffects.Rows.Title",
+      "content": "E20FX.Tours.MyEffects.Rows.Content",
+      "app": "actorEffects",
+      "selector": ".e20fx-row input[name$=\".animation\"]",
+      "tooltipDirection": "DOWN"
+    },
+    {
+      "id": "save",
+      "title": "E20FX.Tours.MyEffects.Save.Title",
+      "content": "E20FX.Tours.MyEffects.Save.Content",
+      "app": "actorEffects",
+      "selector": "footer button[type=\"submit\"]",
+      "tooltipDirection": "UP"
+    },
+    {
+      "id": "outro",
+      "title": "E20FX.Tours.MyEffects.Outro.Title",
+      "content": "E20FX.Tours.MyEffects.Outro.Content"
+    }
+  ]
+}

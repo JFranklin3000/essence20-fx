@@ -11,6 +11,8 @@ import { registerTurnMarkers } from "./turn-markers.mjs";
 import { aaHasAnimation, attackGoesToAA, muteAAAttackCards, playWithAA } from "./aa-bridge.mjs";
 import { AutorecInstaller, installAutorec, offerAutorecOnce } from "./aa-autorec-install.mjs";
 import { legacy, registerCompat } from "./compat.mjs";
+import { registerTourHooks } from "./tours.mjs";
+import { registerCombatStings, registerHealing } from "./combat-stings.mjs";
 
 // The windows' stylesheet, attached here as well as listed in module.json: a module.json change only takes effect when
 // the world restarts, and without it the windows can't scroll.
@@ -27,6 +29,7 @@ registerSceneAmbience();
 registerChatEmblem();
 registerTurnMarkers();
 offerAutorecOnce();
+registerTourHooks();
 
 /**
  * Essence20 FX: listens to the system's essence20.* hooks (its docs/ARCHITECTURE.md, "Hooks for modules") and plays
@@ -179,5 +182,9 @@ Hooks.on('moveToken', (document, movement, operation, user) => {
   const width = (movement.destination?.width ?? document.width) * (canvas?.grid?.size ?? 100);
   playMoments(teleportMoments({ actor: document.actor, from, to, width, hidden: document.hidden }));
 });
+
+// Healing (Health up, Stun down) and combat's start, rounds, turns and end - read from Foundry's documents.
+registerHealing(on);
+registerCombatStings(on);
 
 globalThis[MODULE_ID] = { rollMoments, eventMoments, signatureMoments, skillMoments, zordMoments, playMoments, aaHasAnimation, installAutorec, legacy };

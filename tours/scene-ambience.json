@@ -1,0 +1,39 @@
+{
+  "namespace": "essence20-fx",
+  "id": "sceneAmbience",
+  "title": "E20FX.Tours.SceneAmbience.Title",
+  "description": "E20FX.Tours.SceneAmbience.Description",
+  "display": true,
+  "restricted": true,
+  "canBeResumed": true,
+  "steps": [
+    {
+      "id": "intro",
+      "title": "E20FX.Tours.SceneAmbience.Intro.Title",
+      "content": "E20FX.Tours.SceneAmbience.Intro.Content"
+    },
+    {
+      "id": "field",
+      "title": "E20FX.Tours.SceneAmbience.Field.Title",
+      "content": "E20FX.Tours.SceneAmbience.Field.Content",
+      "app": "sceneConfig",
+      "selector": ".form-group:has([name=\"flags.essence20-fx.ambience\"])",
+      "tooltipDirection": "UP"
+    },
+    {
+      "id": "setting",
+      "title": "E20FX.Tours.SceneAmbience.Setting.Title",
+      "content": "E20FX.Tours.SceneAmbience.Setting.Content",
+      "app": "settings",
+      "tab": "essence20-fx",
+      "tabGroup": "categories",
+      "selector": "#settings-config section[data-tab=\"essence20-fx\"] .form-group:has([name=\"essence20-fx.sceneAmbience\"])",
+      "tooltipDirection": "LEFT"
+    },
+    {
+      "id": "outro",
+      "title": "E20FX.Tours.SceneAmbience.Outro.Title",
+      "content": "E20FX.Tours.SceneAmbience.Outro.Content"
+    }
+  ]
+}

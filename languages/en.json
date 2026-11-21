@@ -12,8 +12,8 @@
         "Hint": "A projectile or swing, an impact, and a sound for every attack - in the look of its damage type - and a burst for area attacks."
       },
       "Damage": {
-        "Name": "Damage and Defeat effects",
-        "Hint": "A token flashes and shakes when it takes damage, and a Defeated one gets a puff of smoke and a skull."
+        "Name": "Damage, Defeat and healing effects",
+        "Hint": "A token flashes and shakes when it takes damage, a Defeated one gets a puff of smoke and a skull, and a glow plays when Health comes back or Stun is recovered."
       },
       "Conditions": {
         "Name": "Condition effects",
@@ -26,6 +26,10 @@
       "Extras": {
         "Name": "Story Point, Spellcasting and teamwork effects",
         "Hint": "Story Points spent, Spellcasting sparkles in the caster's colour, the Weird's static, help from a teammate (hearts in My Little Pony), rerolls (fireworks for ponies), and Requisitions arriving."
+      },
+      "CombatStings": {
+        "Name": "Combat start, round and turn effects",
+        "Hint": "\"Combat!\" across the screen when combat starts, the round number each new round, \"Your turn\" for the players whose character is up, and a bell when combat ends. With a Foundry Combat Theme picked, its sounds play instead of these."
       },
       "Volume": {
         "Name": "Effect volume",
@@ -112,10 +116,11 @@
       "Group": {
         "attacks": "Attacks",
         "areas": "Area attacks",
-        "damage": "Damage and Defeat",
+        "damage": "Damage, Defeat and healing",
         "conditions": "Conditions",
         "signature": "Morph, Transform and Zords",
-        "extras": "Story Points, Spellcasting and teamwork"
+        "extras": "Story Points, Spellcasting and teamwork",
+        "combat": "Combat start, rounds and turns"
       },
       "BrowseAnimation": "Browse for an animation",
       "BrowseSound": "Browse for a sound",
@@ -160,7 +165,13 @@
       "weird-used": "The Weird",
       "assist-given": "Help from a teammate",
       "rerolled": "Reroll",
-      "requisition-granted": "Requisition granted"
+      "requisition-granted": "Requisition granted",
+      "heal-health": "Health restored",
+      "heal-stun": "Stun recovered",
+      "combat-start": "Combat starts",
+      "combat-round": "New round",
+      "combat-turn": "Your turn (players)",
+      "combat-end": "Combat ends"
     },
     "Emblems": {
       "Title": "Faction Emblems",
@@ -205,6 +216,12 @@
         "fireflies": "Fireflies"
       }
     },
+    "Combat": {
+      "Start": "Combat!",
+      "Round": "Round {round}",
+      "Turn": "Your turn, {name}",
+      "End": "Combat over"
+    },
     "Autorec": {
       "Title": "Essence20 weapons for Automated Animations",
       "Open": "Add Essence20 weapons",
@@ -213,6 +230,226 @@
       "Added": "Added {count} Essence20 entries to Automated Animations.",
       "NeedsAA": "Automated Animations is not active."
     },
-    "LegacySystem": "Essence20 FX: this world runs Essence20 {version}. Attacks, damage, Defeat, Conditions, Morph, Transform, Energon, Megazords forming and Story Points play; area bursts, Zords arriving and leaving, Megazords breaking apart, Requisitions, rerolls and help from a teammate need Essence20 6.0.5."
+    "LegacySystem": "Essence20 FX: this world runs Essence20 {version}. Attacks, damage, Defeat, Conditions, Morph, Transform, Energon, Megazords forming and Story Points play; area bursts, Zords arriving and leaving, Megazords breaking apart, Requisitions, rerolls and help from a teammate need Essence20 6.0.5.",
+    "Tours": {
+      "Offer": {
+        "Title": "Essence20 FX",
+        "Content": "Want a quick tour of the settings? It shows where to turn each kind of effect on or off, set the volume, and find Configure FX and Faction Emblems. You can run it again any time from Manage Tours in the Settings sidebar.",
+        "Yes": "Show me",
+        "No": "Not now"
+      },
+      "StartHere": {
+        "Title": "Essence20 FX: Start here",
+        "Description": "What plays and when, and where to turn each kind of effect on or off, set the volume and find the module's windows.",
+        "Intro": {
+          "Title": "Animations and sounds",
+          "Content": "Essence20 FX plays an animation and a sound when something happens in the rules: an attack hits or misses, a Ranger Morphs, a Zord arrives, a Story Point is spent.\nIt plays them for everyone at the table, through Sequencer. This tour shows where to set it up."
+        },
+        "Settings": {
+          "Title": "Configure Settings",
+          "Content": "Everything is set up from Configure Settings, in the Settings sidebar."
+        },
+        "Category": {
+          "Title": "Essence20 FX settings",
+          "Content": "This module's page. Most of it is the GM's, for the whole table; a few settings at the bottom are each player's own."
+        },
+        "Enabled": {
+          "Title": "Play effects",
+          "Content": "The switch for everything at once - turn it off for a scene that needs to stay quiet."
+        },
+        "Kinds": {
+          "Title": "Each kind of effect",
+          "Content": "Below it, a switch for each kind: attacks, damage, Defeat and healing, Conditions, Morph / Transform / Zords, Story Points, Spellcasting and teamwork, and combat's start, rounds and turns.\nTurn off what your table finds too busy and keep the rest."
+        },
+        "Lasting": {
+          "Title": "Lasting effects",
+          "Content": "Effects that stay while a state lasts: a Morphed Ranger's aura, Defeated smoke, a marker over a Stunned or Poisoned token.\nThe ring on the active combatant is off unless you turn it on."
+        },
+        "Emblems": {
+          "Title": "Faction emblems",
+          "Content": "Where your faction emblems show: a badge on tokens, turn markers, a flash, roll cards and dice.\nThe module ships no emblems - you add your own images in Faction Emblems."
+        },
+        "Animator": {
+          "Title": "Attack animations by",
+          "Content": "Only matters with Automated Animations turned on: who animates attacks. The default uses Automated Animations when it has an animation for the item, and Essence20 FX's otherwise."
+        },
+        "Volume": {
+          "Title": "Effect volume",
+          "Content": "How loud the sounds are for everyone. Each player's own Interface volume applies on top."
+        },
+        "ReducedMotion": {
+          "Title": "Reduced motion",
+          "Content": "Each player's own: they hear the sounds but don't see the animations. Players can also turn effects or sounds off entirely in Sequencer's settings."
+        },
+        "Menus": {
+          "Title": "The module's windows",
+          "Content": "Configure FX changes what each effect plays. Faction Emblems takes your faction images. Add Essence20 weapons gives Automated Animations names it recognises, when you use it."
+        },
+        "Outro": {
+          "Title": "Where to next",
+          "Content": "The Configure FX tour shows how to change or turn off one effect. Faction Emblems shows how to add your own emblems, and Scene ambience how to give a scene a loop of its own.\nYour players can take \"Effects for players\" for their own settings. All of them are in Manage Tours."
+        }
+      },
+      "ConfigureFx": {
+        "Title": "Essence20 FX: Configure FX",
+        "Description": "Change what one effect plays - another animation or sound, its volume - or turn it off, preview it, and share your setup.",
+        "Intro": {
+          "Title": "Configure FX",
+          "Content": "Configure FX lists every effect the module plays, so you can change one without touching the rest.\nThis tour opens it. Nothing changes unless you press Save."
+        },
+        "Button": {
+          "Title": "Open Configure FX",
+          "Content": "Configure FX is on this module's page in Configure Settings."
+        },
+        "Groups": {
+          "Title": "Every effect",
+          "Content": "The effects are grouped by what sets them off: attacks, areas, damage, Conditions, Morph / Transform / Zords, and the rest.\nA row you have changed is marked."
+        },
+        "On": {
+          "Title": "On or off",
+          "Content": "Untick an effect to stop it playing, without turning off the rest of its kind."
+        },
+        "Animation": {
+          "Title": "Its animation",
+          "Content": "Leave it blank for the default (shown greyed out). To change it, type a Sequencer database path such as jb2a.impact.004.blue, or browse for a video file with the clapperboard button."
+        },
+        "Sound": {
+          "Title": "Its sound",
+          "Content": "Blank for the default, or browse for a sound file with the music button. The speaker button mutes this one effect; click it again for the default sound."
+        },
+        "Volume": {
+          "Title": "Its volume",
+          "Content": "From 0 to 1, for this effect only. Blank uses the module's Effect volume."
+        },
+        "Preview": {
+          "Title": "Preview",
+          "Content": "Plays the effect as the row stands now, saved or not, on the token you have selected. Select a token on the map first."
+        },
+        "Reset": {
+          "Title": "Reset",
+          "Content": "Puts the row back to the default."
+        },
+        "Share": {
+          "Title": "Export and Import",
+          "Content": "Export saves your changes to a JSON file; Import reads one in - press Save to keep it. A handy way to share a setup with another table."
+        },
+        "Save": {
+          "Title": "Save",
+          "Content": "Save keeps your changes for the world. Close the window without saving and nothing changes."
+        },
+        "Outro": {
+          "Title": "A character's own effects",
+          "Content": "Each character can have their own version of this list too - a Ranger's Morph in their own look - from the Effects item in their sheet's header menu. It plays over yours.\nThe \"Effects for players\" tour shows it."
+        }
+      },
+      "FactionEmblems": {
+        "Title": "Essence20 FX: Faction Emblems",
+        "Description": "Add your own faction images: the badge on a token's corner, the flash on a Morph or Transform, and the turn marker.",
+        "Intro": {
+          "Title": "Faction emblems",
+          "Content": "The module ships no faction symbols - they belong to Hasbro - but you can add your own images for each faction.\nThis tour opens Faction Emblems. Nothing changes unless you press Save."
+        },
+        "Button": {
+          "Title": "Open Faction Emblems",
+          "Content": "Faction Emblems is on this module's page in Configure Settings."
+        },
+        "Specs": {
+          "Title": "Two images each",
+          "Content": "Each faction can have an emblem and a turn marker. This says what size and shape each should be."
+        },
+        "Name": {
+          "Title": "The faction's name",
+          "Content": "A character wears the emblem of the Faction item it has, else of the folder it is in - so name the faction the way those are named. The tint colours the flash. The bin removes the faction."
+        },
+        "Emblem": {
+          "Title": "The emblem",
+          "Content": "The badge on the token's corner, the flash on a Morph, a Transform or a Megazord forming, and the mark beside the name on roll cards.\nA square, transparent PNG or WebP, bold and simple - it shows small. The preview shows it on a token."
+        },
+        "Marker": {
+          "Title": "The turn marker",
+          "Content": "Foundry's marker under the token whose turn it is. Foundry draws it larger than the token and under it, so only the outer ring shows.\nA square, transparent image with the design in its outer band. A marker picked for a token by hand is never replaced."
+        },
+        "Add": {
+          "Title": "Add a faction",
+          "Content": "For a faction not on the list."
+        },
+        "Import": {
+          "Title": "Import folder",
+          "Content": "Pick a folder of images and they are matched to the factions by file name: cobra.png for the emblem, cobra-marker.png for the turn marker."
+        },
+        "Save": {
+          "Title": "Save",
+          "Content": "Save keeps the images for the world. Which places they show is set by the Faction emblems settings on the module page."
+        },
+        "Outro": {
+          "Title": "One character, another faction",
+          "Content": "To give one character a different emblem - or none - open the Effects item in their sheet's header menu and pick it there."
+        }
+      },
+      "SceneAmbience": {
+        "Title": "Essence20 FX: Scene ambience",
+        "Description": "Give a scene a loop of its own - Night Vale haze, Energon motes, fog, battlefield smoke - played over the whole map.",
+        "Intro": {
+          "Title": "Scene ambience",
+          "Content": "A scene can have a loop that plays over the whole map while you're on it: Night Vale's violet haze and static, Energon motes, sparkles, fog, smoke, wind, fireflies.\nThis tour opens this scene's configuration. Nothing changes unless you save it."
+        },
+        "Field": {
+          "Title": "The scene's ambience",
+          "Content": "Pick a look here and save the scene. Everyone viewing it sees the loop, except players with Reduced motion on."
+        },
+        "Setting": {
+          "Title": "Turning it off",
+          "Content": "This switch turns every scene's ambience off at once, without losing each scene's choice."
+        },
+        "Outro": {
+          "Title": "That's it",
+          "Content": "Each scene keeps its own choice, so set it once per scene."
+        }
+      },
+      "MyEffects": {
+        "Title": "Essence20 FX: Effects for players",
+        "Description": "Your own settings: Reduced motion, dice in your character's colours, and your character's own effects and emblem.",
+        "Intro": {
+          "Title": "Your own effects",
+          "Content": "Animations and sounds play for everyone when something happens in the game. This tour shows the settings that are yours alone, and how to give your character their own look."
+        },
+        "Settings": {
+          "Title": "Configure Settings",
+          "Content": "Your settings are in Configure Settings, in the Settings sidebar."
+        },
+        "ReducedMotion": {
+          "Title": "Reduced motion",
+          "Content": "On: you still hear the sounds, but don't see the animations. It only changes your screen.\nTo turn effects or sounds off completely, use Sequencer's settings."
+        },
+        "Dice": {
+          "Title": "Dice in your character's colours",
+          "Content": "With Dice So Nice: your dice in your Ranger's colour, else your faction's or your game line's. Dice So Nice's own settings also list the Essence20 colour sets."
+        },
+        "Header": {
+          "Title": "Your character's Effects",
+          "Content": "In your character sheet's header menu, Effects opens your character's own effects."
+        },
+        "Color": {
+          "Title": "Effect colour",
+          "Content": "The colour of your Morph and your Spellcasting. Blank uses your character's own colour."
+        },
+        "Faction": {
+          "Title": "Faction emblem",
+          "Content": "Which faction emblem your character wears, if your GM has added emblems. Worked out by itself from your Faction, unless you pick one."
+        },
+        "Rows": {
+          "Title": "Your versions",
+          "Content": "Any effect can be changed for your character alone - another animation or sound, or off - and plays over the GM's. Preview plays it on your selected token."
+        },
+        "Save": {
+          "Title": "Save",
+          "Content": "Save keeps your choices on your character. Close without saving and nothing changes."
+        },
+        "Outro": {
+          "Title": "That's it",
+          "Content": "You can run this tour again any time from Manage Tours, in the Settings sidebar."
+        }
+      }
+    }
   }
 }

@@ -25,6 +25,7 @@ export function registerSettings() {
   toggle('conditions');
   toggle('signature');
   toggle('extras');
+  toggle('combatStings');
   toggle('ambient');
   toggle('ambientActive', { initial: false });
   toggle('emblemBadge');

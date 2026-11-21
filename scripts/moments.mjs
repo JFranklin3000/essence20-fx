@@ -286,3 +286,79 @@ export function teleportMoments({ actor, from, to, width, hidden = false }) {
   const line = actor?.items?.find?.(item => item?.type == 'role') ? lineOf(actor) : (actor?.system?.canTransform ? 'transformers' : lineOf(actor));
   return [{ key: 'teleport', from, at: { x: to.x, y: to.y, w: width }, color: colorOf(actor), line, hidden, actor }];
 }
+
+/** The values healing is read from, before and after an actor update. */
+export const HEAL_PATHS = { health: 'system.health.value', healthMax: 'system.health.max', stun: 'system.stun.value' };
+
+/** State changes that move Health or Stun on their own (a new maximum, a Morph) - not healing. */
+const NOT_HEALING = ['system.health.max', 'system.isMorphed', 'system.isTransformed'];
+
+/**
+ * An actor update -> its healing moments: Health back up, Stun recovered. The system announces damage but not healing,
+ * so it's read from the update itself, on the client that made it.
+ * @param {Object} change
+ * @param {Actor} change.actor
+ * @param {Function} change.has     path -> whether the update touched it
+ * @param {Function} change.now     path -> its value after
+ * @param {Object} change.before    { [path]: value before } for HEAL_PATHS
+ * @returns {Array<Object>}
+ */
+export function healMoments({ actor, has, now, before = {} }) {
+  if (!actor || NOT_HEALING.some(path => has(path))) {
+    return [];
+  }
+
+  const rose = path => has(path) && Number.isFinite(Number(before[path])) && Number(now(path)) > Number(before[path]);
+  const fell = path => has(path) && Number.isFinite(Number(before[path])) && Number(now(path)) < Number(before[path]);
+  const moments = [];
+  if (rose(HEAL_PATHS.health)) {
+    moments.push({ key: 'heal.health', source: actor, line: lineOf(actor) });
+  }
+
+  if (fell(HEAL_PATHS.stun)) {
+    moments.push({ key: 'heal.stun', source: actor, line: lineOf(actor) });
+  }
+
+  return moments;
+}
+
+/**
+ * A combat's turn changing (Foundry's combatTurnChange) -> its stings: Combat! when it starts, the round when a new one
+ * begins, and "Your turn" for the players who own whoever is up. Only going forward: stepping back plays the turn again
+ * but no round or start banner.
+ * @param {Object} change
+ * @param {{round, turn, combatantId}} change.previous
+ * @param {{round, turn, combatantId}} change.current
+ * @param {Object} [change.combatant]   Whoever is up: { name, actor, defeated, color }
+ * @param {String[]} [change.owners]    Ids of the active players who own them
+ * @returns {Array<Object>}   Moments with `screen: true`, `text: {key, data}` and, for a turn, `users`.
+ */
+export function combatMoments({ previous = {}, current = {}, combatant = null, owners = [] } = {}) {
+  // Foundry v14 hands a starting combat the same state as both previous and current: that's the start.
+  const same = ['round', 'turn', 'combatantId'].every(part => previous?.[part] === current?.[part]);
+  const before = same ? 0 : Number(previous?.round) || 0;
+  const round = Number(current?.round) || 0;
+  if (round < 1) {
+    return [];
+  }
+
+  const moments = [];
+  if (before < 1) {
+    moments.push({ key: 'combat.start', screen: true, text: { key: 'E20FX.Combat.Start' } });
+  } else if (round > before) {
+    moments.push({ key: 'combat.round', screen: true, text: { key: 'E20FX.Combat.Round', data: { round } } });
+  }
+
+  const moved = round != before || current?.combatantId != previous?.combatantId || current?.turn != previous?.turn;
+  if (moved && combatant && !combatant.defeated && owners.length) {
+    moments.push({
+      key: 'combat.turn', screen: true, users: [...owners], source: combatant.actor ?? undefined, color: combatant.color ?? null,
+      text: { key: 'E20FX.Combat.Turn', data: { name: combatant.name } }, delay: moments.length ? 900 : 0,
+    });
+  }
+
+  return moments;
+}
+
+/** A combat that had started being ended -> its sting. */
+export const combatEndMoments = ({ started = false } = {}) => (started ? [{ key: 'combat.end', screen: true, text: { key: 'E20FX.Combat.End' } }] : []);
